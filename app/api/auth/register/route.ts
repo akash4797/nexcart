@@ -1,6 +1,6 @@
 import { NextResponse } from 'next/server'
 import { db } from '@/db';
-import {users} from "@/db/schema"
+import {users} from "@/db/userSchema"
 import { v4 as uuidv4 } from 'uuid';
 
 
