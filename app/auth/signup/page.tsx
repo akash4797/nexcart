@@ -40,85 +40,64 @@ export default function SignUp() {
   }
 
   return (
-    <div className="flex min-h-screen items-center justify-center bg-gray-50">
-      <div className="w-full max-w-md space-y-8 rounded-lg bg-white p-6 shadow-md">
+    <div className="flex min-h-screen items-center justify-center">
+      <form onSubmit={handleSubmit} className="space-y-4 w-full max-w-md p-8">
+        <h1 className="text-2xl font-bold mb-4">Sign Up</h1>
+        
+        {error && (
+          <div className="bg-red-100 text-red-600 p-2 rounded">{error}</div>
+        )}
+
         <div>
-          <h2 className="text-center text-3xl font-bold tracking-tight text-gray-900">
-            Create your account
-          </h2>
+          <label htmlFor="name" className="block text-sm font-medium mb-1">
+            Name
+          </label>
+          <input
+            type="text"
+            name="name"
+            required
+            className="w-full p-2 border rounded"
+          />
         </div>
 
-        <form className="mt-8 space-y-6" onSubmit={handleSubmit}>
-          {error && (
-            <div className="rounded-md bg-red-50 p-4 text-sm text-red-700">
-              {error}
-            </div>
-          )}
+        <div>
+          <label htmlFor="email" className="block text-sm font-medium mb-1">
+            Email
+          </label>
+          <input
+            type="email"
+            name="email"
+            required
+            className="w-full p-2 border rounded"
+          />
+        </div>
 
-          <div className="space-y-4 rounded-md shadow-sm">
-            <div>
-              <label htmlFor="name" className="block text-sm font-medium text-gray-700">
-                Name
-              </label>
-              <input
-                id="name"
-                name="name"
-                type="text"
-                required
-                className="mt-1 block w-full rounded-md border border-gray-300 px-3 py-2 shadow-sm focus:border-blue-500 focus:outline-none focus:ring-blue-500"
-                placeholder="John Doe"
-              />
-            </div>
+        <div>
+          <label htmlFor="password" className="block text-sm font-medium mb-1">
+            Password
+          </label>
+          <input
+            type="password"
+            name="password"
+            required
+            className="w-full p-2 border rounded"
+          />
+        </div>
 
-            <div>
-              <label htmlFor="email" className="block text-sm font-medium text-gray-700">
-                Email address
-              </label>
-              <input
-                id="email"
-                name="email"
-                type="email"
-                autoComplete="email"
-                required
-                className="mt-1 block w-full rounded-md border border-gray-300 px-3 py-2 shadow-sm focus:border-blue-500 focus:outline-none focus:ring-blue-500"
-                placeholder="john@example.com"
-              />
-            </div>
+        <button
+          type="submit"
+          className="w-full bg-blue-500 text-white p-2 rounded hover:bg-blue-600"
+        >
+          {loading ? 'Creating account...' : 'Sign Up'}
+        </button>
 
-            <div>
-              <label htmlFor="password" className="block text-sm font-medium text-gray-700">
-                Password
-              </label>
-              <input
-                id="password"
-                name="password"
-                type="password"
-                autoComplete="new-password"
-                required
-                className="mt-1 block w-full rounded-md border border-gray-300 px-3 py-2 shadow-sm focus:border-blue-500 focus:outline-none focus:ring-blue-500"
-                placeholder="••••••••"
-              />
-            </div>
-          </div>
-
-          <div>
-            <button
-              type="submit"
-              disabled={loading}
-              className="group relative flex w-full justify-center rounded-md bg-blue-600 px-3 py-2 text-sm font-semibold text-white hover:bg-blue-500 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-600 disabled:opacity-50 disabled:cursor-not-allowed"
-            >
-              {loading ? 'Creating account...' : 'Sign up'}
-            </button>
-          </div>
-
-          <div className="text-sm text-center">
-            Already have an account?{' '}
-            <Link href="/auth/signin" className="font-medium text-blue-600 hover:text-blue-500">
-              Sign in
-            </Link>
-          </div>
-        </form>
-      </div>
+        <div className="text-sm text-center">
+          Already have an account?{' '}
+          <Link href="/auth/signin" className="font-medium text-blue-600 hover:text-blue-500">
+            Sign in
+          </Link>
+        </div>
+      </form>
     </div>
   )
 }

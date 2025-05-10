@@ -4,7 +4,6 @@ import {users} from "@/db/schema"
 import { v4 as uuidv4 } from 'uuid';
 
 
-// Edge-compatible password hashing using Web Crypto API
 async function hashPassword(password: string): Promise<string> {
   const encoder = new TextEncoder()
   const data = encoder.encode(password)
@@ -40,18 +39,15 @@ export async function POST(req: Request) {
     const hashedPassword = await hashPassword(password)
     
     // Create user and exclude password from response
-    const user = await db.insert(users).values({
+     await db.insert(users).values({
       id: uuidv4(), 
       email,
       name,
       password: hashedPassword,
       role: 'user', 
-  }).$returningId()
+  })
 
-  console.log(user)
-
-
-    return NextResponse.json(user, { status: 201 })
+    return NextResponse.json({message:"User created successfully"}, { status: 201 })
   } catch (error) {
     console.log(error)
     console.error('Registration error:', error)
