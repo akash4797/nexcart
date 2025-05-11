@@ -9,10 +9,13 @@ const schema = {
 };
 
 const connection = mysql.createPool({
-  host: "104.194.8.175",
-  user: "unifyxen_nexcart_admin",
-  database: "unifyxen_nexcart",
-  password: "nexcart2025!",
+  host: process.env.DATABASE_HOST,
+  user: process.env.DATABASE_USER,
+  database: process.env.DATABASE_NAME,
+  password: process.env.DATABASE_PASSWORD,
+  ssl: {
+    rejectUnauthorized: true,
+  },
 });
 
 export const db = drizzle(connection, { schema, mode: "default" });
