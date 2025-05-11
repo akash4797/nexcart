@@ -8,7 +8,7 @@ const schema = {
   suppliers: supplier.supplier,
 };
 
-const connection = await mysql.createConnection({
+const connection = mysql.createPool({
   host: process.env.DATABASE_HOST,
   user: process.env.DATABASE_USER,
   database: process.env.DATABASE_NAME,
