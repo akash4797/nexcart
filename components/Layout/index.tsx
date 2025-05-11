@@ -1,7 +1,7 @@
 "use client"
 import React from 'react'
 import Header from './Header'
-import AdminHeader from './AdminHeader'
+import AdminHeader from './Admin/Header'
 import { usePathname } from 'next/navigation'
 
 const Layout = ({children}:{children: React.ReactNode}) => {

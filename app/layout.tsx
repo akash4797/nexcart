@@ -1,19 +1,27 @@
-import { NextAuthProvider } from './providers'
-import './globals.css'
-import Layout from '@/components/Layout'
+import { NextAuthProvider } from "./providers";
+import "./globals.css";
+import Layout from "@/components/Layout";
+import { ThemeProvider } from "@/components/Theme/theme-provider";
 
 export default function RootLayout({
   children,
 }: {
-  children: React.ReactNode
+  children: React.ReactNode;
 }) {
   return (
-    <html lang="en">
+    <html lang="en" suppressHydrationWarning>
       <body>
         <NextAuthProvider>
-          <Layout>{children}</Layout>
+          <ThemeProvider
+            attribute="class"
+            defaultTheme="system"
+            enableSystem
+            disableTransitionOnChange
+          >
+            <Layout>{children}</Layout>
+          </ThemeProvider>
         </NextAuthProvider>
       </body>
     </html>
-  )
+  );
 }
