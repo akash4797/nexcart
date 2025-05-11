@@ -8,14 +8,11 @@ const schema = {
   suppliers: supplier.supplier,
 };
 
-const connection = mysql.createPool({
+const connection = await mysql.createConnection({
   host: process.env.DATABASE_HOST,
   user: process.env.DATABASE_USER,
   database: process.env.DATABASE_NAME,
   password: process.env.DATABASE_PASSWORD,
-  ssl: {
-    rejectUnauthorized: true,
-  },
 });
 
 export const db = drizzle(connection, { schema, mode: "default" });
