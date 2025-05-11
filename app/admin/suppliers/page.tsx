@@ -112,7 +112,14 @@ const Supplier = () => {
               <DialogClose asChild>
                 <Button variant={"secondary"}>Close</Button>
               </DialogClose>
-              <Button onClick={() => formik.submitForm()}>Create</Button>
+              <Button
+                onClick={() => formik.submitForm()}
+                disabled={formik.isSubmitting || formik.isValidating}
+              >
+                {formik.isSubmitting || formik.isValidating
+                  ? "Creating"
+                  : "Create"}
+              </Button>
             </DialogFooter>
           </DialogContent>
         </Dialog>
