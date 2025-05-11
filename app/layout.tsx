@@ -1,6 +1,6 @@
 import { NextAuthProvider } from './providers'
 import './globals.css'
-
+import Layout from '@/components/Layout'
 
 export default function RootLayout({
   children,
@@ -11,7 +11,7 @@ export default function RootLayout({
     <html lang="en">
       <body>
         <NextAuthProvider>
-          {children}
+          <Layout>{children}</Layout>
         </NextAuthProvider>
       </body>
     </html>
