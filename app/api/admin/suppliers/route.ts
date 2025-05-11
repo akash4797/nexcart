@@ -1,8 +1,8 @@
 import { db } from "@/db";
 import { supplier } from "@/db/supplier.schema";
 import { getServerSession } from "next-auth";
-import { authOptions } from "@/app/api/auth/[...nextauth]/route";
 import { NextResponse } from "next/server";
+import { authOptions } from "../../auth/auth.config";
 
 export async function POST(request: Request) {
   try {
