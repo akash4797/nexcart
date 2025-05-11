@@ -1,38 +1,38 @@
-"use client"
+"use client";
 
-import { signIn } from "next-auth/react"
-import Link from "next/link"
-import { useRouter } from "next/navigation"
-import { FormEvent, useState } from "react"
+import { signIn } from "next-auth/react";
+import Link from "next/link";
+import { useRouter } from "next/navigation";
+import { FormEvent, useState } from "react";
 
 export default function SignIn() {
-  const router = useRouter()
-  const [error, setError] = useState<string | null>(null)
+  const router = useRouter();
+  const [error, setError] = useState<string | null>(null);
 
   async function handleSubmit(e: FormEvent<HTMLFormElement>) {
-    e.preventDefault()
-    const formData = new FormData(e.currentTarget)
+    e.preventDefault();
+    const formData = new FormData(e.currentTarget);
 
     const response = await signIn("credentials", {
       email: formData.get("email"),
       password: formData.get("password"),
       redirect: false,
-    })
+    });
 
     if (response?.error) {
-      setError("Invalid credentials")
-      return
+      setError("Invalid credentials");
+      return;
     }
 
-    router.push("/admin")
-    router.refresh()
+    router.push("/");
+    router.refresh();
   }
 
   return (
     <div className="flex min-h-screen items-center justify-center">
       <form onSubmit={handleSubmit} className="space-y-4 w-full max-w-md p-8">
         <h1 className="text-2xl font-bold mb-4">Sign In</h1>
-        
+
         {error && (
           <div className="bg-red-100 text-red-600 p-2 rounded">{error}</div>
         )}
@@ -67,13 +67,16 @@ export default function SignIn() {
         >
           Sign In
         </button>
-      <div className="text-sm text-center">
-          Need an account?{' '}
-          <Link href="/auth/signup" className="font-medium text-blue-600 hover:text-blue-500">
+        <div className="text-sm text-center">
+          Need an account?{" "}
+          <Link
+            href="/auth/signup"
+            className="font-medium text-blue-600 hover:text-blue-500"
+          >
             Sign up
           </Link>
         </div>
       </form>
     </div>
-  )
+  );
 }

@@ -1,31 +1,31 @@
-"use client"
-import React from 'react'
-import Header from './Header'
-import AdminHeader from './Admin/Header'
-import { usePathname } from 'next/navigation'
+"use client";
+import React from "react";
+import CustomerHeader from "./Customer/Header";
+import AdminHeader from "./Admin/Header";
+import { usePathname } from "next/navigation";
 
-const Layout = ({children}:{children: React.ReactNode}) => {
-  const pathname = usePathname()
+const Layout = ({ children }: { children: React.ReactNode }) => {
+  const pathname = usePathname();
 
-  if (pathname.includes('auth')) {
-    return children
+  if (pathname.includes("auth")) {
+    return children;
   }
 
-  if(pathname.includes('admin')){
+  if (pathname.includes("admin")) {
     return (
       <>
-        <AdminHeader/>
+        <AdminHeader />
         {children}
       </>
-    )
+    );
   }
 
   return (
     <>
-      <Header/>
+      <CustomerHeader />
       {children}
     </>
-  )
-}
+  );
+};
 
-export default Layout
+export default Layout;
