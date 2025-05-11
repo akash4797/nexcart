@@ -1,29 +1,26 @@
 import { db } from "@/db";
-import NextAuth from "next-auth";
+import NextAuth, { AuthOptions } from "next-auth";
 import CredentialsProvider from "next-auth/providers/credentials";
 
 async function hashPassword(password: string): Promise<string> {
   const encoder = new TextEncoder();
   const data = encoder.encode(password);
-  const hash = await crypto.subtle.digest("SHA-256", data);
+  const hash = await crypto.subtle.digest('SHA-256', data);
   return btoa(String.fromCharCode(...new Uint8Array(hash)));
 }
 
-async function verifyPassword(
-  password: string,
-  hashedPassword: string
-): Promise<boolean> {
+async function verifyPassword(password: string, hashedPassword: string): Promise<boolean> {
   const hashedInput = await hashPassword(password);
   return hashedInput === hashedPassword;
 }
 
-const handler = NextAuth({
+export const authOptions: AuthOptions = {
   providers: [
     CredentialsProvider({
       name: "credentials",
       credentials: {
         email: { label: "Email", type: "email" },
-        password: { label: "Password", type: "password" },
+        password: { label: "Password", type: "password" }
       },
       async authorize(credentials) {
         if (!credentials?.email || !credentials?.password) {
@@ -31,17 +28,17 @@ const handler = NextAuth({
         }
 
         const user = await db.query.users.findFirst({
-          where: (users, { eq }) => eq(users.email, credentials.email),
+          where: (users, { eq }) => eq(
+            users.email,
+            credentials.email
+          )
         });
 
         if (!user) {
           return null;
         }
 
-        const passwordMatch = await verifyPassword(
-          credentials.password,
-          user.password
-        );
+        const passwordMatch = await verifyPassword(credentials.password, user.password);
 
         if (!passwordMatch) {
           return null;
@@ -51,10 +48,10 @@ const handler = NextAuth({
           id: user.id,
           email: user.email,
           name: user.name,
-          role: user.role,
+          role: user.role
         };
-      },
-    }),
+      }
+    })
   ],
   session: {
     strategy: "jwt",
@@ -75,8 +72,10 @@ const handler = NextAuth({
         session.user.role = token.role;
       }
       return session;
-    },
-  },
-});
+    }
+  }
+};
+
+const handler = NextAuth(authOptions);
 
 export { handler as GET, handler as POST };

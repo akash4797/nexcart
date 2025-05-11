@@ -10,6 +10,7 @@ import {
   MenuIcon,
   HomeIcon,
   PackageIcon,
+  RecycleIcon,
   UsersIcon,
   ShoppingCartIcon,
   SettingsIcon,
@@ -24,6 +25,7 @@ const Sidebar = () => {
   const navigation = [
     { name: "Dashboard", href: "/admin", icon: HomeIcon },
     { name: "Products", href: "/admin/products", icon: PackageIcon },
+    { name: "Suppliers", href: "/admin/suppliers", icon: RecycleIcon },
     { name: "Users", href: "/admin/users", icon: UsersIcon },
     { name: "Orders", href: "/admin/orders", icon: ShoppingCartIcon },
     { name: "Settings", href: "/admin/settings", icon: SettingsIcon },
