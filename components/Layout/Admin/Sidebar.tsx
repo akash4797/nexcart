@@ -1,3 +1,4 @@
+"use client";
 import React from "react";
 import {
   Sheet,
@@ -21,6 +22,7 @@ import { cn } from "@/lib/utils";
 
 const Sidebar = () => {
   const pathname = usePathname();
+  const [open, setOpen] = React.useState(false);
 
   const navigation = [
     { name: "Dashboard", href: "/admin", icon: HomeIcon },
@@ -32,7 +34,7 @@ const Sidebar = () => {
   ];
 
   return (
-    <Sheet>
+    <Sheet open={open} onOpenChange={setOpen}>
       <SheetTrigger asChild>
         <MenuIcon className="cursor-pointer" />
       </SheetTrigger>
@@ -45,6 +47,7 @@ const Sidebar = () => {
               return (
                 <Link
                   key={item.name}
+                  onClick={() => setOpen(false)}
                   href={item.href}
                   className={cn(
                     "flex items-center gap-3 rounded-lg px-3 py-2 transition-all",
