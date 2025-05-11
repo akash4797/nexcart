@@ -4,6 +4,7 @@ import { signIn } from "next-auth/react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { FormEvent, useState } from "react";
+import { HomeIcon } from "lucide-react";
 
 export default function SignIn() {
   const router = useRouter();
@@ -31,7 +32,17 @@ export default function SignIn() {
   return (
     <div className="flex min-h-screen items-center justify-center">
       <form onSubmit={handleSubmit} className="space-y-4 w-full max-w-md p-8">
-        <h1 className="text-2xl font-bold mb-4">Sign In</h1>
+        <div className="flex items-center mb-4 gap-5">
+          <button
+            type="button"
+            className="cursor-pointer flex"
+            onClick={() => router.push("/")}
+          >
+            <HomeIcon />
+          </button>
+          <span className="text-2xl text-gray-600">/</span>
+          <h1 className="text-2xl font-bold">Sign In</h1>
+        </div>
 
         {error && (
           <div className="bg-red-100 text-red-600 p-2 rounded">{error}</div>
