@@ -1,128 +1,89 @@
 "use client";
 import React from "react";
-import { Button } from "@/components/ui/button";
-import { PlusIcon } from "lucide-react";
+import useSWR from "swr";
 import {
-  Dialog,
-  DialogContent,
-  DialogHeader,
-  DialogTitle,
-  DialogTrigger,
-  DialogFooter,
-  DialogClose,
-} from "@/components/ui/dialog";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
-import { useFormik } from "formik";
-import * as yup from "yup";
-import { toast } from "sonner";
+  Table,
+  TableBody,
+  TableCell,
+  TableHead,
+  TableHeader,
+  TableRow,
+} from "@/components/ui/table";
+import AddSupplier from "./AddSupplier";
+import EditSupplier from "./EditSupplier";
+import DeleteSupplier from "./DeleteSupplier";
+import { Mutations } from "@/lib/Constants";
+
+const fetcher = async () => {
+  try {
+    const response = await fetch("/api/admin/suppliers");
+    if (!response.ok) {
+      throw new Error("Failed to fetch suppliers");
+    }
+    const data = await response.json();
+    return data;
+  } catch (error) {
+    console.error("Error fetching suppliers:", error);
+    throw error;
+  }
+};
 
 const Supplier = () => {
-  const formik = useFormik({
-    initialValues: {
-      name: "",
-      address: "",
-      remark: "",
-    },
-    validationSchema: yup.object({
-      name: yup.string().required("Name is required"),
-      address: yup.string().required("Address is required"),
-      remark: yup.string(),
-    }),
-    onSubmit: async (values) => {
-      const response = await fetch("/api/admin/suppliers", {
-        method: "POST",
-        body: JSON.stringify(values),
-        headers: {
-          "Content-Type": "application/json",
-        },
-      });
-      if (response.ok) {
-        toast.success("Supplier created successfully");
-        formik.resetForm();
-      }
-    },
-  });
+  const {
+    data: suppliers,
+    error,
+    isLoading,
+  } = useSWR<Supplier[]>(Mutations.SUPPLIERS.FETCH, fetcher);
+
+  if (isLoading) {
+    return <div>Loading...</div>;
+  }
+  if (error) {
+    return <div>Error: {error.message}</div>;
+  }
 
   return (
     <div className="container mx-auto p-5">
-      <div className="">
-        <h1 className="text-2xl font-bold text-center">Suppliers</h1>
+      <div className="text-center">
+        <h1 className="text-2xl font-bold">Suppliers</h1>
+        <p className="text-sm mt-1">
+          Add suppliers to buy products for retailing and stock them in your
+          inventory.
+        </p>
       </div>
-      <div className="flex justify-center mt-5">
-        <Dialog>
-          <DialogTrigger asChild>
-            <Button size={"sm"}>
-              <PlusIcon />
-              Add Supplier
-            </Button>
-          </DialogTrigger>
-          <DialogContent>
-            <DialogHeader>
-              <DialogTitle>Add Supplier</DialogTitle>
-              <form className="mt-5 grid grid-cols-2 gap-5">
-                <div className="grid w-full max-w-full items-center gap-2">
-                  <Label htmlFor="name">Name</Label>
-                  <Input
-                    type="text"
-                    id="name"
-                    placeholder="John Doe"
-                    value={formik.values.name}
-                    onChange={formik.handleChange}
-                  />
-                  {formik.touched.name && formik.errors.name && (
-                    <div className="text-red-500 text-xs">
-                      {formik.errors.name}
-                    </div>
-                  )}
-                </div>
-                <div className="grid w-full max-w-full items-center gap-2">
-                  <Label htmlFor="address">Adress</Label>
-                  <Input
-                    type="text"
-                    id="address"
-                    placeholder="Dhaka, Bangladesh"
-                    value={formik.values.address}
-                    onChange={formik.handleChange}
-                  />
-                  {formik.touched.address && formik.errors.address && (
-                    <div className="text-red-500 text-xs">
-                      {formik.errors.address}
-                    </div>
-                  )}
-                </div>
-                <div className="grid w-full max-w-full items-center gap-2 col-span-2">
-                  <Label htmlFor="remark">Remark</Label>
-                  <Input
-                    type="text"
-                    id="remark"
-                    placeholder="Write Remark here"
-                    value={formik.values.remark}
-                    onChange={formik.handleChange}
-                  />
-                  {formik.touched.remark && formik.errors.remark && (
-                    <div className="text-red-500 text-xs">
-                      {formik.errors.remark}
-                    </div>
-                  )}
-                </div>
-              </form>
-            </DialogHeader>
-            <DialogFooter>
-              <DialogClose asChild>
-                <Button variant={"secondary"}>Close</Button>
-              </DialogClose>
-              <Button
-                onClick={() => formik.submitForm()}
-                disabled={formik.isSubmitting || formik.isValidating}
-              >
-                {formik.isSubmitting || formik.isValidating
-                  ? "Creating"
-                  : "Create"}
-              </Button>
-            </DialogFooter>
-          </DialogContent>
-        </Dialog>
+      <div className="flex justify-start mt-5">
+        <AddSupplier />
+      </div>
+      <div className="flex justify-center mt-5 pb-5 dark:bg-[#131315] bg-[#f3f3f3] rounded-2xl dark:text-white text-black">
+        <Table className="w-full">
+          <TableHeader className="">
+            <TableRow>
+              {["NAME", "ADDRESS", "REMARK", "ACTION"].map((header, index) => (
+                <TableHead
+                  key={index}
+                  className="w-[150px] text-center font-bold py-5"
+                >
+                  {header}
+                </TableHead>
+              ))}
+            </TableRow>
+          </TableHeader>
+          <TableBody>
+            {suppliers
+              ? suppliers.map((supplier) => (
+                  <TableRow key={supplier.id} className="text-center">
+                    <TableCell>{supplier.name}</TableCell>
+                    <TableCell>{supplier.address}</TableCell>
+                    <TableCell>{supplier.remark}</TableCell>
+                    <TableCell className="flex items-center gap-2 justify-center py-3">
+                      <EditSupplier supplier={supplier} />
+                      <DeleteSupplier supplier={supplier} />
+                    </TableCell>
+                  </TableRow>
+                ))
+              : null}
+          </TableBody>
+        </Table>
       </div>
     </div>
   );

@@ -2,9 +2,13 @@ import { db } from "@/db";
 import { supplier } from "@/db/supplier.schema";
 import { getServerSession } from "next-auth";
 import { NextResponse } from "next/server";
-import { authOptions } from "../../auth/auth.config";
+import { authOptions } from "@/app/api/auth/auth.config";
+import { eq } from "drizzle-orm";
 
-export async function POST(request: Request) {
+export async function PUT(
+  request: Request,
+  { params }: { params: Promise<{ id: number }> }
+) {
   try {
     // Check authentication and admin role
     const session = await getServerSession(authOptions);
@@ -15,31 +19,34 @@ export async function POST(request: Request) {
       return NextResponse.json({ error: "Forbidden" }, { status: 403 });
     }
 
+    //parse query
+    const { id } = await params;
     // Parse request body
     const body = await request.json();
     const { name, address, remark } = body;
-
     // Validate required fields
-    if (!name || !address) {
+    if (!id || !name || !address) {
       return NextResponse.json(
-        { error: "Name and address are required" },
+        { error: "ID, name, and address are required" },
         { status: 400 }
       );
     }
-
-    // Insert new supplier
-    await db.insert(supplier).values({
-      name,
-      address,
-      remark: remark || null,
-    });
+    // Update supplier
+    await db
+      .update(supplier)
+      .set({
+        name,
+        address,
+        remark: remark || null,
+      })
+      .where(eq(supplier.id, id));
 
     return NextResponse.json(
-      { message: "Supplier created successfully" },
-      { status: 201 }
+      { message: "Supplier updated successfully" },
+      { status: 200 }
     );
   } catch (error) {
-    console.error("Error creating supplier:", error);
+    console.error("Error updating supplier:", error);
     return NextResponse.json(
       { error: "Internal server error" },
       { status: 500 }
@@ -47,7 +54,10 @@ export async function POST(request: Request) {
   }
 }
 
-export async function GET() {
+export async function DELETE(
+  request: Request,
+  { params }: { params: Promise<{ id: number }> }
+) {
   try {
     // Check authentication and admin role
     const session = await getServerSession(authOptions);
@@ -57,11 +67,22 @@ export async function GET() {
     if (session?.user?.role !== "admin") {
       return NextResponse.json({ error: "Forbidden" }, { status: 403 });
     }
-    // Retrieve all suppliers
-    const suppliers = await db.select().from(supplier);
-    return NextResponse.json(suppliers, { status: 200 });
+
+    //parse query
+    const { id } = await params;
+
+    // Validate required fields
+    if (!id) {
+      return NextResponse.json({ error: "ID is required" }, { status: 400 });
+    }
+    // Delete supplier
+    await db.delete(supplier).where(eq(supplier.id, id));
+    return NextResponse.json(
+      { message: "Supplier deleted successfully" },
+      { status: 200 }
+    );
   } catch (error) {
-    console.error("Error retrieving suppliers:", error);
+    console.error("Error deleting supplier:", error);
     return NextResponse.json(
       { error: "Internal server error" },
       { status: 500 }
