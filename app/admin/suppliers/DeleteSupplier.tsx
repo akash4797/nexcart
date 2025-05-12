@@ -8,6 +8,7 @@ import {
   AlertDialogHeader,
   AlertDialogTitle,
   AlertDialogTrigger,
+  AlertDialogOverlay,
 } from "@/components/ui/alert-dialog";
 import { Button } from "@/components/ui/button";
 import { toast } from "sonner";
@@ -32,6 +33,7 @@ const DeleteSupplier = ({ supplier }: { supplier: Supplier }) => {
 
   return (
     <AlertDialog>
+      <AlertDialogOverlay className="backdrop-blur-sm" />
       <AlertDialogTrigger asChild>
         <Button size={"sm"}>Delete</Button>
       </AlertDialogTrigger>
@@ -39,13 +41,18 @@ const DeleteSupplier = ({ supplier }: { supplier: Supplier }) => {
         <AlertDialogHeader>
           <AlertDialogTitle>Are you absolutely sure?</AlertDialogTitle>
           <AlertDialogDescription>
-            This action cannot be undone. This will permanently delete your
-            account and remove your data from the servers.
+            Do you want to delete this <strong>{supplier.name}</strong>? This
+            action cannot be undone.
           </AlertDialogDescription>
         </AlertDialogHeader>
         <AlertDialogFooter>
           <AlertDialogCancel>Cancel</AlertDialogCancel>
-          <AlertDialogAction onClick={handleDelete}>Continue</AlertDialogAction>
+          <AlertDialogAction
+            onClick={handleDelete}
+            className="bg-red-600 text-white hover:bg-red-500 focus:ring-red-500 focus:ring-offset-red-200 transition ease-in-out duration-150"
+          >
+            DELETE
+          </AlertDialogAction>
         </AlertDialogFooter>
       </AlertDialogContent>
     </AlertDialog>

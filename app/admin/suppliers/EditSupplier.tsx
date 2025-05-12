@@ -7,6 +7,7 @@ import {
   DialogTrigger,
   DialogFooter,
   DialogClose,
+  DialogOverlay,
 } from "@/components/ui/dialog";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -48,6 +49,7 @@ const EditSupplier = ({ supplier }: { supplier: Supplier }) => {
   });
   return (
     <Dialog open={open} onOpenChange={setOpen}>
+      <DialogOverlay className="backdrop-blur-sm" />
       <DialogTrigger asChild>
         <Button size={"sm"}>Edit</Button>
       </DialogTrigger>
