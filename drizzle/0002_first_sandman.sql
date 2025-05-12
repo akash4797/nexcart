@@ -1,0 +1,1 @@
+ALTER TABLE `supplier` MODIFY COLUMN `address` varchar(255);
