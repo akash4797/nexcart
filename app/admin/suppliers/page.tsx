@@ -8,7 +8,6 @@ import {
   TableHead,
   TableHeader,
   TableRow,
-  TableCaption,
 } from "@/components/ui/table";
 import AddSupplier from "./AddSupplier";
 import EditSupplier from "./EditSupplier";
@@ -70,7 +69,7 @@ const Supplier = () => {
   }
 
   return (
-    <div className="container mx-auto p-5">
+    <div className="container mx-auto p-5 h-[calc(100vh-80px)]">
       <div className="text-center">
         <h1 className="text-2xl font-bold">Suppliers</h1>
         <p className="text-sm mt-1">
@@ -87,11 +86,8 @@ const Supplier = () => {
           onChange={(e) => setSearch(e.target.value)}
         />
       </div>
-      <div className="flex justify-center mt-5 pb-5 dark:bg-[#131315] bg-[#f3f3f3] rounded-2xl dark:text-white text-black">
+      <div className="flex flex-col justify-center mt-5 dark:bg-[#131315] bg-[#f3f3f3] rounded-2xl dark:text-white text-black max-h-[65vh]">
         <Table className="w-full">
-          <TableCaption>
-            {filteredSuppliers.length} suppliers found
-          </TableCaption>
           <TableHeader className="">
             <TableRow>
               {["NAME", "CONTACT", "ADDRESS", "REMARK", "ACTION"].map(
@@ -123,6 +119,13 @@ const Supplier = () => {
               : null}
           </TableBody>
         </Table>
+        <div className="flex justify-between items-center py-5 px-2">
+          <div className="hidden sm:block"></div>
+          <span className="text-xs">
+            {filteredSuppliers.length} suppliers found
+          </span>
+          <div className="">{/* here will be pagination */}</div>
+        </div>
       </div>
     </div>
   );
