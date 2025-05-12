@@ -54,7 +54,7 @@ const AddSupplier = () => {
     <Dialog open={open} onOpenChange={setOpen}>
       <DialogOverlay className="backdrop-blur-sm" />
       <DialogTrigger asChild>
-        <Button size={"sm"} className="text-xs sm:text-base">
+        <Button size={"sm"} className="text-xs sm:text-sm">
           <PlusIcon />
           Add Supplier
         </Button>
