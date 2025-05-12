@@ -1,4 +1,5 @@
 import React from "react";
+import useScroll from "@/hooks/scroll";
 
 const PageTitle = ({
   title,
@@ -9,16 +10,8 @@ const PageTitle = ({
   subText: string;
   children: React.ReactNode;
 }) => {
-  const [isScrolled, setIsScrolled] = React.useState(false);
+  const isScrolled = useScroll();
 
-  React.useEffect(() => {
-    const handleScroll = () => {
-      setIsScrolled(window.scrollY > 50);
-    };
-
-    window.addEventListener("scroll", handleScroll);
-    return () => window.removeEventListener("scroll", handleScroll);
-  }, []);
   return (
     <div
       className={`bg-white dark:bg-[#0A0A0A] ${

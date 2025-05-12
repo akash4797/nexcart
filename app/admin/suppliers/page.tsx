@@ -15,6 +15,7 @@ import DeleteSupplier from "./DeleteSupplier";
 import { Mutations } from "@/lib/Constants";
 import { Input } from "@/components/ui/input";
 import PageTitle from "@/components/Layout/Admin/PageTitle";
+import useScroll from "@/hooks/scroll";
 
 const fetcher = async () => {
   try {
@@ -37,6 +38,7 @@ const Supplier = () => {
     isLoading,
   } = useSWR<Supplier[]>(Mutations.SUPPLIERS.FETCH, fetcher);
 
+  const isScrolled = useScroll();
   const [search, setSearch] = React.useState("");
   const [filteredSuppliers, setFilteredSuppliers] = React.useState<Supplier[]>(
     []
@@ -86,7 +88,11 @@ const Supplier = () => {
           />
         </div>
       </PageTitle>
-      <div className="flex flex-col justify-center mt-5 dark:bg-[#131315] bg-[#f3f3f3] rounded-2xl dark:text-white text-black mb-0 sm:mb-32">
+      <div
+        className={`flex flex-col justify-center ${
+          isScrolled ? "mt-28 sm:mt-32" : "mt-5"
+        } dark:bg-[#131315] bg-[#f3f3f3] rounded-2xl dark:text-white text-black mb-0 sm:mb-32`}
+      >
         <Table className="w-full">
           <TableHeader className="">
             <TableRow>
