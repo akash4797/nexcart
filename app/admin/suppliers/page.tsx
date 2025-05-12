@@ -14,6 +14,7 @@ import EditSupplier from "./EditSupplier";
 import DeleteSupplier from "./DeleteSupplier";
 import { Mutations } from "@/lib/Constants";
 import { Input } from "@/components/ui/input";
+import PageTitle from "@/components/Layout/Admin/PageTitle";
 
 const fetcher = async () => {
   try {
@@ -69,24 +70,23 @@ const Supplier = () => {
   }
 
   return (
-    <div className="container mx-auto p-5 h-[calc(100vh-80px)]">
-      <div className="text-center">
-        <h1 className="text-2xl font-bold">Suppliers</h1>
-        <p className="text-sm mt-1">
-          Add suppliers to buy products for retailing and stock them in your
-          inventory.
-        </p>
-      </div>
-      <div className="flex justify-center items-center gap-3 mt-5">
-        <AddSupplier />
-        <Input
-          placeholder="Search"
-          className="max-w-md"
-          value={search}
-          onChange={(e) => setSearch(e.target.value)}
-        />
-      </div>
-      <div className="flex flex-col justify-center mt-5 dark:bg-[#131315] bg-[#f3f3f3] rounded-2xl dark:text-white text-black max-h-[65vh]">
+    <div className="container mx-auto p-5">
+      <PageTitle
+        title="Suppliers"
+        subText="Add suppliers to buy products for retailing and stock them in your
+          inventory."
+      >
+        <div className="flex justify-center items-center gap-3 mt-4">
+          <AddSupplier />
+          <Input
+            placeholder="Search"
+            className="max-w-md text-sm sm:text-base"
+            value={search}
+            onChange={(e) => setSearch(e.target.value)}
+          />
+        </div>
+      </PageTitle>
+      <div className="flex flex-col justify-center mt-5 dark:bg-[#131315] bg-[#f3f3f3] rounded-2xl dark:text-white text-black mb-0 sm:mb-32">
         <Table className="w-full">
           <TableHeader className="">
             <TableRow>
