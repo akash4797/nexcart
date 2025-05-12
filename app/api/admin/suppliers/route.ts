@@ -17,20 +17,18 @@ export async function POST(request: Request) {
 
     // Parse request body
     const body = await request.json();
-    const { name, address, remark } = body;
+    const { name, address, contact, remark } = body;
 
     // Validate required fields
-    if (!name || !address) {
-      return NextResponse.json(
-        { error: "Name and address are required" },
-        { status: 400 }
-      );
+    if (!name) {
+      return NextResponse.json({ error: "Name is required" }, { status: 400 });
     }
 
     // Insert new supplier
     await db.insert(supplier).values({
       name,
-      address,
+      address: address || null,
+      contact: contact || null,
       remark: remark || null,
     });
 

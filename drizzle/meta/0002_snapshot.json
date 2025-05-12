@@ -1,8 +1,8 @@
 {
   "version": "5",
   "dialect": "mysql",
-  "id": "a4fec061-c41e-47e4-86d0-644cd915217a",
-  "prevId": "00000000-0000-0000-0000-000000000000",
+  "id": "d74f8753-0e9d-4300-a960-f207b55c70f7",
+  "prevId": "3ac72b43-a416-4c6f-8610-ad40f2426683",
   "tables": {
     "supplier": {
       "name": "supplier",
@@ -25,7 +25,7 @@
           "name": "address",
           "type": "varchar(255)",
           "primaryKey": false,
-          "notNull": true,
+          "notNull": false,
           "autoincrement": false
         },
         "contact": {
@@ -101,13 +101,6 @@
           "type": "varchar(255)",
           "primaryKey": false,
           "notNull": true,
-          "autoincrement": false
-        },
-        "image": {
-          "name": "image",
-          "type": "varchar(255)",
-          "primaryKey": false,
-          "notNull": false,
           "autoincrement": false
         },
         "role": {

@@ -48,7 +48,10 @@ const Supplier = () => {
         const filtered = suppliers?.filter(
           (supplier) =>
             supplier.name.toLowerCase().includes(search.toLowerCase()) ||
-            supplier.address.toLowerCase().includes(search.toLowerCase()) ||
+            (supplier.address &&
+              supplier.address.toLowerCase().includes(search.toLowerCase())) ||
+            (supplier.contact &&
+              supplier.contact.toLowerCase().includes(search.toLowerCase())) ||
             (supplier.remark &&
               supplier.remark.toLowerCase().includes(search.toLowerCase()))
         );
@@ -91,14 +94,16 @@ const Supplier = () => {
           </TableCaption>
           <TableHeader className="">
             <TableRow>
-              {["NAME", "ADDRESS", "REMARK", "ACTION"].map((header, index) => (
-                <TableHead
-                  key={index}
-                  className="w-[150px] text-center font-bold py-5"
-                >
-                  {header}
-                </TableHead>
-              ))}
+              {["NAME", "CONTACT", "ADDRESS", "REMARK", "ACTION"].map(
+                (header, index) => (
+                  <TableHead
+                    key={index}
+                    className="w-[150px] text-center font-bold py-5"
+                  >
+                    {header}
+                  </TableHead>
+                )
+              )}
             </TableRow>
           </TableHeader>
           <TableBody>
@@ -106,6 +111,7 @@ const Supplier = () => {
               ? filteredSuppliers.map((supplier) => (
                   <TableRow key={supplier.id} className="text-center">
                     <TableCell>{supplier.name}</TableCell>
+                    <TableCell>{supplier.contact}</TableCell>
                     <TableCell>{supplier.address}</TableCell>
                     <TableCell>{supplier.remark}</TableCell>
                     <TableCell className="flex items-center gap-2 justify-center py-3">

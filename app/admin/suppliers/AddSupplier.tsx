@@ -25,11 +25,13 @@ const AddSupplier = () => {
     initialValues: {
       name: "",
       address: "",
+      contact: "",
       remark: "",
     },
     validationSchema: yup.object({
       name: yup.string().required("Name is required"),
-      address: yup.string().required("Address is required"),
+      address: yup.string(),
+      contact: yup.string(),
       remark: yup.string(),
     }),
     onSubmit: async (values) => {
@@ -41,10 +43,10 @@ const AddSupplier = () => {
         },
       });
       if (response.ok) {
+        formik.resetForm();
         toast.success("Supplier created successfully");
         mutate(Mutations.SUPPLIERS.FETCH);
         setOpen(false);
-        formik.resetForm();
       }
     },
   });
@@ -89,12 +91,27 @@ const AddSupplier = () => {
                 </div>
               )}
             </div>
-            <div className="grid w-full max-w-full items-center gap-2 col-span-2">
+            <div className="grid w-full max-w-full items-center gap-2">
+              <Label htmlFor="contact">Contact</Label>
+              <Input
+                type="text"
+                id="contact"
+                placeholder="+8801..."
+                value={formik.values.contact}
+                onChange={formik.handleChange}
+              />
+              {formik.touched.contact && formik.errors.contact && (
+                <div className="text-red-500 text-xs">
+                  {formik.errors.contact}
+                </div>
+              )}
+            </div>
+            <div className="grid w-full max-w-full items-center gap-2">
               <Label htmlFor="remark">Remark</Label>
               <Input
                 type="text"
                 id="remark"
-                placeholder="Write Remark here"
+                placeholder="Write Remark here..."
                 value={formik.values.remark}
                 onChange={formik.handleChange}
               />

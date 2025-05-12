@@ -23,11 +23,11 @@ export async function PUT(
     const { id } = await params;
     // Parse request body
     const body = await request.json();
-    const { name, address, remark } = body;
+    const { name, address, contact, remark } = body;
     // Validate required fields
-    if (!id || !name || !address) {
+    if (!id || !name) {
       return NextResponse.json(
-        { error: "ID, name, and address are required" },
+        { error: "ID, name are required" },
         { status: 400 }
       );
     }
@@ -36,7 +36,8 @@ export async function PUT(
       .update(supplier)
       .set({
         name,
-        address,
+        address: address || null,
+        contact: contact || null,
         remark: remark || null,
       })
       .where(eq(supplier.id, id));

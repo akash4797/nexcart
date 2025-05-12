@@ -1,8 +1,8 @@
 {
   "version": "5",
   "dialect": "mysql",
-  "id": "a4fec061-c41e-47e4-86d0-644cd915217a",
-  "prevId": "00000000-0000-0000-0000-000000000000",
+  "id": "3ac72b43-a416-4c6f-8610-ad40f2426683",
+  "prevId": "a4fec061-c41e-47e4-86d0-644cd915217a",
   "tables": {
     "supplier": {
       "name": "supplier",
@@ -101,13 +101,6 @@
           "type": "varchar(255)",
           "primaryKey": false,
           "notNull": true,
-          "autoincrement": false
-        },
-        "image": {
-          "name": "image",
-          "type": "varchar(255)",
-          "primaryKey": false,
-          "notNull": false,
           "autoincrement": false
         },
         "role": {
