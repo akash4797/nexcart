@@ -2,10 +2,14 @@ import { drizzle } from "drizzle-orm/mysql2";
 import mysql from "mysql2/promise";
 import * as userSchema from "./user.schema";
 import * as supplier from "./supplier.schema";
+import * as product from "./product.schema";
+import * as purchase from "./purchase.schema";
 
 const schema = {
   users: userSchema.users,
   suppliers: supplier.supplier,
+  products: product.product,
+  purchases: purchase.purchase,
 };
 
 const connection = mysql.createPool({
