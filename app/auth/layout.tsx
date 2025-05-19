@@ -1,17 +1,16 @@
 import React from "react";
-import { getServerSession } from "next-auth";
 import { redirect } from "next/navigation";
-import { authOptions } from "../api/auth/auth.config";
+import { isAdmin, serverAuth } from "@/lib/auth/serverAuth";
 
 const Layout = async ({ children }: { children: React.ReactNode }) => {
-  const session = await getServerSession(authOptions);
+  const session = await serverAuth();
 
   if (!session) {
     return <>{children}</>;
   }
 
-  // Redirect based on user role
-  const redirectPath = session.user?.role === "admin" ? "/admin" : "/";
+  const isAdminUser = await isAdmin();
+  const redirectPath = isAdminUser ? "/admin" : "/";
   redirect(redirectPath);
 };
 

@@ -1,9 +1,8 @@
 import { db } from "@/db";
 import { supplier } from "@/db/supplier.schema";
-import { getServerSession } from "next-auth";
 import { NextResponse } from "next/server";
-import { authOptions } from "@/app/api/auth/auth.config";
 import { eq } from "drizzle-orm";
+import { isAdmin } from "@/lib/auth/serverAuth";
 
 export async function PUT(
   request: Request,
@@ -11,12 +10,9 @@ export async function PUT(
 ) {
   try {
     // Check authentication and admin role
-    const session = await getServerSession(authOptions);
-    if (!session) {
+    const isAdminUser = await isAdmin();
+    if (!isAdminUser) {
       return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
-    }
-    if (session?.user?.role !== "admin") {
-      return NextResponse.json({ error: "Forbidden" }, { status: 403 });
     }
 
     //parse query
@@ -61,12 +57,9 @@ export async function DELETE(
 ) {
   try {
     // Check authentication and admin role
-    const session = await getServerSession(authOptions);
-    if (!session) {
+    const isAdminUser = await isAdmin();
+    if (!isAdminUser) {
       return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
-    }
-    if (session?.user?.role !== "admin") {
-      return NextResponse.json({ error: "Forbidden" }, { status: 403 });
     }
 
     //parse query
