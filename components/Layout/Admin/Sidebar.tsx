@@ -66,7 +66,7 @@ const Sidebar = () => {
       </SheetTrigger>
       <SheetContent side="left">
         <SheetHeader>
-          <SheetTitle>NEXCART</SheetTitle>
+          <SheetTitle className="allenoire-font">NEXCART</SheetTitle>
           <nav className="mt-6 space-y-2">
             {navigation.map((item) => {
               const isActive = pathname === item.href;
