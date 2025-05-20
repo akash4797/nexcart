@@ -2,6 +2,7 @@ import { db } from "@/db";
 import { supplier } from "@/db/supplier.schema";
 import { NextResponse } from "next/server";
 import { isAdmin } from "@/lib/auth/serverAuth";
+import { desc } from "drizzle-orm";
 
 export async function POST(request: Request) {
   try {
@@ -50,7 +51,10 @@ export async function GET() {
     }
 
     // Retrieve all suppliers
-    const suppliers = await db.select().from(supplier);
+    const suppliers = await db
+      .select()
+      .from(supplier)
+      .orderBy(desc(supplier.id));
     return NextResponse.json(suppliers, { status: 200 });
   } catch (error) {
     console.error("Error retrieving suppliers:", error);
