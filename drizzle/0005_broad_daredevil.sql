@@ -1,1 +1,0 @@
-ALTER TABLE `purchase` ADD `other_expense` int DEFAULT 0 NOT NULL;

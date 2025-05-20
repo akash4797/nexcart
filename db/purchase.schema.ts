@@ -8,9 +8,10 @@ export const purchase = mysqlTable("purchase", {
   productId: int("product_id")
     .notNull()
     .references(() => product.id),
-  supplierId: int("supplier_id")
-    .notNull()
-    .references(() => supplier.id),
+  supplierId: int("supplier_id").references(() => supplier.id, {
+    onDelete: "set null",
+    onUpdate: "cascade",
+  }),
   quantity: int("quantity").notNull(),
   buyPrice: int("buy_price").notNull(),
   sellPrice: int("sell_price").notNull(),

@@ -3,7 +3,7 @@ import { authOptions } from "@/lib/auth/auth.config";
 export async function serverAuth() {
   const session = await getServerSession(authOptions);
   if (!session?.user) {
-    throw new Error("Not signed in");
+    return null;
   }
   return {
     ...session,

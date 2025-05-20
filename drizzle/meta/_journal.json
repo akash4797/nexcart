@@ -5,43 +5,15 @@
     {
       "idx": 0,
       "version": "5",
-      "when": 1747072071428,
-      "tag": "0000_narrow_cable",
+      "when": 1747698514900,
+      "tag": "0000_blushing_riptide",
       "breakpoints": true
     },
     {
       "idx": 1,
       "version": "5",
-      "when": 1747072279164,
-      "tag": "0001_faithful_mysterio",
-      "breakpoints": true
-    },
-    {
-      "idx": 2,
-      "version": "5",
-      "when": 1747072407053,
-      "tag": "0002_first_sandman",
-      "breakpoints": true
-    },
-    {
-      "idx": 3,
-      "version": "5",
-      "when": 1747598575426,
-      "tag": "0003_heavy_mephisto",
-      "breakpoints": true
-    },
-    {
-      "idx": 4,
-      "version": "5",
-      "when": 1747599103456,
-      "tag": "0004_glamorous_hammerhead",
-      "breakpoints": true
-    },
-    {
-      "idx": 5,
-      "version": "5",
-      "when": 1747600735273,
-      "tag": "0005_broad_daredevil",
+      "when": 1747698605254,
+      "tag": "0001_silent_franklin_richards",
       "breakpoints": true
     }
   ]
