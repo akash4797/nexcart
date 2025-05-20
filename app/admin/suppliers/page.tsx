@@ -128,7 +128,9 @@ const Supplier = () => {
         <div className="flex justify-between items-center py-5 px-2">
           <div className="hidden sm:block"></div>
           <span className="text-xs">
-            {filteredSuppliers.length} suppliers found
+            {search.trim() !== ""
+              ? `${filteredSuppliers.length} suppliers found`
+              : `${filteredSuppliers?.length} suppliers in total`}
           </span>
           <div className="">{/* here will be pagination */}</div>
         </div>
