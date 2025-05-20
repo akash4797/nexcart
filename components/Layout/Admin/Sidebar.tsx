@@ -84,14 +84,14 @@ const Sidebar = () => {
                       }}
                       href={item.href}
                       className={cn(
-                        "flex items-center justify-between gap-3 rounded-lg px-3 py-2 transition-all w-full",
+                        "flex items-center justify-between gap-3 rounded-lg px-3 py-2 transition-all w-full text-[14px]",
                         isActive
                           ? "bg-gray-100 text-gray-900 dark:bg-gray-800 dark:text-gray-50"
                           : "text-gray-500 hover:bg-gray-100 dark:hover:bg-gray-800 dark:text-gray-400"
                       )}
                     >
                       <div className="flex items-center gap-3">
-                        <item.icon className="h-5 w-5" />
+                        <item.icon className="h-4 w-4" />
                         {item.name}
                       </div>
                       {item.subcategories && (
@@ -112,7 +112,7 @@ const Sidebar = () => {
                           onClick={() => setOpen(false)}
                           href={sub.href}
                           className={cn(
-                            "block px-3 py-2 text-sm rounded-lg transition-all w-full",
+                            "block py-2 text-[12px] rounded-lg transition-all w-full",
                             pathname === sub.href
                               ? "bg-gray-100 text-gray-900 dark:bg-gray-800 dark:text-gray-50"
                               : "text-gray-500 hover:bg-gray-100 dark:hover:bg-gray-800 dark:text-gray-400"
