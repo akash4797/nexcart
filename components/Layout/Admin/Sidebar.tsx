@@ -27,13 +27,23 @@ const Sidebar = () => {
 
   const navigation = [
     { name: "Dashboard", href: "/admin", icon: HomeIcon },
-    { name: "Products", href: "/admin/products", icon: PackageIcon },
+    {
+      name: "Inventory",
+      href: "#",
+      icon: PackageIcon,
+      subcategories: [
+        { name: "Stock Overview", href: "/admin/inventory" },
+        { name: "Stock Logs", href: "/admin/stocklogs" },
+      ],
+    },
     {
       name: "Procurement",
       href: "#",
       icon: RecycleIcon,
       subcategories: [
+        { name: "Products", href: "/admin/products" },
         { name: "Suppliers", href: "/admin/suppliers" },
+        { name: "Categories", href: "/admin/categories" },
         { name: "Purchase Orders", href: "/admin/purchases" },
       ],
     },
