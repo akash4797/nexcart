@@ -68,7 +68,9 @@ const Supplier = () => {
     return <div className="flex justify-center items-center">Loading...</div>;
   }
   if (error) {
-    return <div>Error: {error.message}</div>;
+    return (
+      <div className="flex justify-center items-center">{error.message}</div>
+    );
   }
 
   return (
