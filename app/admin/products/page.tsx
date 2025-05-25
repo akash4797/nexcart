@@ -15,6 +15,7 @@ import { Mutations } from "@/lib/Constants";
 import useScroll from "@/hooks/scroll";
 import { Input } from "@/components/ui/input";
 import EditProduct from "./EditProduct";
+import DeleteProduct from "./DeleteProduct";
 
 const fetcher = async () => {
   try {
@@ -113,7 +114,7 @@ const Products = () => {
                     <TableCell>{product.remark}</TableCell>
                     <TableCell className="flex items-center gap-2 justify-center py-3">
                       <EditProduct product={product} />
-                      {/* <DeleteSupplier supplier={supplier} /> */}
+                      <DeleteProduct product={product} />
                     </TableCell>
                   </TableRow>
                 ))
