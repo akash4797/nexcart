@@ -1,13 +1,14 @@
 import React from "react";
 import { PlusIcon } from "lucide-react";
 import { Input } from "@/components/ui/input";
+import { Textarea } from "@/components/ui/textarea";
 import { Label } from "@/components/ui/label";
 import { Button } from "@/components/ui/button";
 import { useFormik } from "formik";
 import * as yup from "yup";
 import { toast } from "sonner";
-import { mutate } from "swr";
-import { Mutations } from "@/lib/Constants";
+// import { mutate } from "swr";
+// import { Mutations } from "@/lib/Constants";
 import Modal from "@/components/Modals/Modal";
 
 const AddProduct = () => {
@@ -15,18 +16,18 @@ const AddProduct = () => {
   const formik = useFormik({
     initialValues: {
       name: "",
-      address: "",
-      contact: "",
+      description: "",
+      image: "",
       remark: "",
     },
     validationSchema: yup.object({
       name: yup.string().required("Name is required"),
-      address: yup.string(),
-      contact: yup.string(),
+      description: yup.string(),
+      image: yup.string(),
       remark: yup.string(),
     }),
     onSubmit: async (values) => {
-      const response = await fetch("/api/admin/suppliers", {
+      const response = await fetch("/api/admin/products", {
         method: "POST",
         body: JSON.stringify(values),
         headers: {
@@ -35,8 +36,8 @@ const AddProduct = () => {
       });
       if (response.ok) {
         formik.resetForm();
-        toast.success("Supplier created successfully");
-        mutate(Mutations.SUPPLIERS.FETCH);
+        toast.success("Product created successfully");
+        // mutate(Mutations.SUPPLIERS.FETCH);
         setOpen(false);
       }
     },
@@ -61,7 +62,7 @@ const AddProduct = () => {
               <Input
                 type="text"
                 id="name"
-                placeholder="John Doe"
+                placeholder="Adidas AIR MAX 90"
                 value={formik.values.name}
                 onChange={formik.handleChange}
               />
@@ -70,32 +71,31 @@ const AddProduct = () => {
               )}
             </div>
             <div className="grid w-full max-w-full items-center gap-2">
-              <Label htmlFor="address">Adress</Label>
+              <Label htmlFor="contact">Image</Label>
               <Input
                 type="text"
-                id="address"
-                placeholder="Dhaka, Bangladesh"
-                value={formik.values.address}
+                id="image"
+                placeholder="Image uploader will be here"
+                value={formik.values.image}
                 onChange={formik.handleChange}
               />
-              {formik.touched.address && formik.errors.address && (
+              {formik.touched.image && formik.errors.image && (
                 <div className="text-red-500 text-xs">
-                  {formik.errors.address}
+                  {formik.errors.image}
                 </div>
               )}
             </div>
             <div className="grid w-full max-w-full items-center gap-2">
-              <Label htmlFor="contact">Contact</Label>
-              <Input
-                type="text"
-                id="contact"
-                placeholder="+8801..."
-                value={formik.values.contact}
+              <Label htmlFor="address">Description</Label>
+              <Textarea
+                id="description"
+                placeholder="Write about the product..."
+                value={formik.values.description}
                 onChange={formik.handleChange}
               />
-              {formik.touched.contact && formik.errors.contact && (
+              {formik.touched.description && formik.errors.description && (
                 <div className="text-red-500 text-xs">
-                  {formik.errors.contact}
+                  {formik.errors.description}
                 </div>
               )}
             </div>
