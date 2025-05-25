@@ -7,8 +7,8 @@ import { Button } from "@/components/ui/button";
 import { useFormik } from "formik";
 import * as yup from "yup";
 import { toast } from "sonner";
-// import { mutate } from "swr";
-// import { Mutations } from "@/lib/Constants";
+import { mutate } from "swr";
+import { Mutations } from "@/lib/Constants";
 import Modal from "@/components/Modals/Modal";
 
 const AddProduct = () => {
@@ -37,7 +37,7 @@ const AddProduct = () => {
       if (response.ok) {
         formik.resetForm();
         toast.success("Product created successfully");
-        // mutate(Mutations.SUPPLIERS.FETCH);
+        mutate(Mutations.PRODUCTS.FETCH);
         setOpen(false);
       }
     },
