@@ -10,7 +10,7 @@ import { mutate } from "swr";
 import { Mutations } from "@/lib/Constants";
 import Modal from "@/components/Modals/Modal";
 
-const AddSupplier = () => {
+const AddProduct = () => {
   const [open, setOpen] = React.useState(false);
   const formik = useFormik({
     initialValues: {
@@ -46,11 +46,11 @@ const AddSupplier = () => {
       <Modal
         open={open}
         onOpenChange={setOpen}
-        title="Add Supplier"
+        title="Add Product"
         trigger={
           <Button size={"sm"} className="text-xs sm:text-sm">
             <PlusIcon />
-            Add Supplier
+            Add Product
           </Button>
         }
       >
@@ -129,4 +129,4 @@ const AddSupplier = () => {
   );
 };
 
-export default AddSupplier;
+export default AddProduct;
