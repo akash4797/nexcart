@@ -5,9 +5,10 @@ import { supplier } from "./supplier.schema";
 
 export const purchase = mysqlTable("purchase", {
   id: int("id").autoincrement().primaryKey(),
-  productId: int("product_id")
-    .notNull()
-    .references(() => product.id),
+  productId: int("product_id").references(() => product.id, {
+    onDelete: "set null",
+    onUpdate: "cascade",
+  }),
   supplierId: int("supplier_id").references(() => supplier.id, {
     onDelete: "set null",
     onUpdate: "cascade",
