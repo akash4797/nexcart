@@ -1,4 +1,4 @@
-import { mysqlTable, int, timestamp } from "drizzle-orm/mysql-core";
+import { mysqlTable, int, timestamp, decimal } from "drizzle-orm/mysql-core";
 import { relations } from "drizzle-orm";
 import { product } from "./product.schema";
 
@@ -8,7 +8,8 @@ export const inventory = mysqlTable("inventory", {
     .notNull()
     .references(() => product.id)
     .unique(),
-  totalQuantity: int("total_quantity").notNull().default(0),
+  quantity: int("quantity").notNull().default(0),
+  avgBuyPrice: decimal("avgBuyPrice", { precision: 10, scale: 2 }).notNull(),
   updatedAt: timestamp("updated_at").onUpdateNow().notNull(),
 });
 

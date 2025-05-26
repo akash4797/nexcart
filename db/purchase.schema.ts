@@ -1,4 +1,10 @@
-import { mysqlTable, int, varchar, timestamp } from "drizzle-orm/mysql-core";
+import {
+  mysqlTable,
+  int,
+  varchar,
+  timestamp,
+  decimal,
+} from "drizzle-orm/mysql-core";
 import { relations } from "drizzle-orm";
 import { product } from "./product.schema";
 import { supplier } from "./supplier.schema";
@@ -14,9 +20,8 @@ export const purchase = mysqlTable("purchase", {
     onUpdate: "cascade",
   }),
   quantity: int("quantity").notNull(),
-  buyPrice: int("buy_price").notNull(),
-  sellPrice: int("sell_price").notNull(),
-  otherExpense: int("other_expense").notNull().default(0),
+  buyPrice: decimal("buy_price", { precision: 10, scale: 2 }).notNull(),
+  otherExpense: decimal("other_expense", { precision: 10, scale: 2 }),
   remark: varchar("remark", { length: 255 }),
   createdAt: timestamp("created_at").defaultNow().notNull(),
 });

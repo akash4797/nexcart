@@ -1,6 +1,7 @@
 "use client";
 import React from "react";
 import PageTitle from "@/components/Layout/Admin/PageTitle";
+import AddPurchase from "./AddPurchase";
 
 const Purchase = () => {
   return (
@@ -9,7 +10,9 @@ const Purchase = () => {
         title="Purchases"
         subText="Purchase from suppliers and add products to you inventory"
       >
-        <div className="flex justify-center items-center gap-3 mt-4"></div>
+        <div className="flex justify-center items-center gap-3 mt-4">
+          <AddPurchase />
+        </div>
       </PageTitle>
     </div>
   );
