@@ -13,6 +13,7 @@ export const product = mysqlTable("product", {
   name: varchar("name", { length: 255 }).notNull(),
   description: text("description"),
   image: varchar("image", { length: 255 }),
+  imageId: int("image_id"),
   remark: varchar("remark", { length: 255 }),
   createdAt: timestamp("createdAt").defaultNow().notNull(),
   updatedAt: timestamp("updatedAt").onUpdateNow().notNull(),
