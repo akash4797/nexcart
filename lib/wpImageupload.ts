@@ -1,3 +1,4 @@
+// WP Image Upload
 export const uploadImageToWP = async (file: File) => {
   try {
     const formData = new FormData();
@@ -26,6 +27,7 @@ export const uploadImageToWP = async (file: File) => {
   }
 };
 
+// WP Image Delete
 export const deleteImageFromWP = async (id: number) => {
   try {
     const username = process.env.WP_USERNAME!;
