@@ -1,0 +1,1 @@
+ALTER TABLE `product` ADD `image_key` varchar(255);

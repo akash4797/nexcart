@@ -50,6 +50,34 @@
       "when": 1748373736834,
       "tag": "0006_yellow_leo",
       "breakpoints": true
+    },
+    {
+      "idx": 7,
+      "version": "5",
+      "when": 1748378612339,
+      "tag": "0007_long_gwen_stacy",
+      "breakpoints": true
+    },
+    {
+      "idx": 8,
+      "version": "5",
+      "when": 1749242859840,
+      "tag": "0008_lame_jack_power",
+      "breakpoints": true
+    },
+    {
+      "idx": 9,
+      "version": "5",
+      "when": 1749243569228,
+      "tag": "0009_fixed_wendigo",
+      "breakpoints": true
+    },
+    {
+      "idx": 10,
+      "version": "5",
+      "when": 1749243869701,
+      "tag": "0010_rainy_gateway",
+      "breakpoints": true
     }
   ]
 }
