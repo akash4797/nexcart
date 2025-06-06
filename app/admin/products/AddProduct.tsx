@@ -1,5 +1,5 @@
 import React from "react";
-import { PlusIcon } from "lucide-react";
+import { CircleX, Delete, PlusIcon, Trash } from "lucide-react";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Label } from "@/components/ui/label";
@@ -10,6 +10,7 @@ import { toast } from "sonner";
 import { mutate } from "swr";
 import { Mutations } from "@/lib/Constants";
 import Modal from "@/components/Modals/Modal";
+import Image from "next/image";
 
 const AddProduct = () => {
   const [open, setOpen] = React.useState(false);
@@ -66,7 +67,7 @@ const AddProduct = () => {
         }
       >
         <Modal.Form>
-          <form className="mt-5 grid grid-cols-2 gap-5">
+          <form className="mt-5 grid grid-cols-1 gap-5">
             <div className="grid w-full max-w-full items-center gap-2">
               <Label htmlFor="name">Name</Label>
               <Input
@@ -80,25 +81,7 @@ const AddProduct = () => {
                 <div className="text-red-500 text-xs">{formik.errors.name}</div>
               )}
             </div>
-            <div className="grid w-full max-w-full items-center gap-2">
-              <Label htmlFor="contact">Image</Label>
-              <Input
-                type="file"
-                id="image"
-                placeholder="Image uploader will be here"
-                onChange={(e) =>
-                  formik.setFieldValue(
-                    "image",
-                    e.target.files ? e.target.files[0] : null
-                  )
-                }
-              />
-              {formik.touched.image && formik.errors.image && (
-                <div className="text-red-500 text-xs">
-                  {formik.errors.image}
-                </div>
-              )}
-            </div>
+
             <div className="grid w-full max-w-full items-center gap-2">
               <Label htmlFor="address">Description</Label>
               <Textarea
@@ -125,6 +108,47 @@ const AddProduct = () => {
               {formik.touched.remark && formik.errors.remark && (
                 <div className="text-red-500 text-xs">
                   {formik.errors.remark}
+                </div>
+              )}
+            </div>
+            <div className="grid w-full max-w-full items-center gap-2">
+              <Label htmlFor="contact">Image</Label>
+              {!formik.values.image && (
+                <Input
+                  type="file"
+                  id="image"
+                  accept="image/*"
+                  placeholder="Image uploader will be here"
+                  onChange={(e) =>
+                    formik.setFieldValue(
+                      "image",
+                      e.target.files ? e.target.files[0] : null,
+                    )
+                  }
+                />
+              )}
+              {formik.values.image && (
+                <div className="mb-2 relative w-fit">
+                  <Button
+                    className="absolute -top-2 -right-2 cursor-pointer h-6 w-6 rounded-full"
+                    size={"icon"}
+                    variant={"destructive"}
+                    onClick={() => formik.setFieldValue("image", null)}
+                  >
+                    <CircleX />
+                  </Button>
+                  <Image
+                    width={80}
+                    height={80}
+                    src={URL.createObjectURL(formik.values.image)}
+                    alt="Selected product image"
+                    className="h-20 w-auto object-contain rounded border border-gray-200"
+                  />
+                </div>
+              )}
+              {formik.touched.image && formik.errors.image && (
+                <div className="text-red-500 text-xs">
+                  {formik.errors.image}
                 </div>
               )}
             </div>
