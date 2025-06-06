@@ -3,10 +3,11 @@ import { product } from "@/db/product.schema";
 import { NextResponse } from "next/server";
 import { eq } from "drizzle-orm";
 import { isAdmin } from "@/lib/auth/serverAuth";
+import { deleteImageFromMinIO } from "@/lib/minio/image";
 
 export async function PUT(
   request: Request,
-  { params }: { params: Promise<{ id: number }> }
+  { params }: { params: Promise<{ id: number }> },
 ) {
   try {
     // Check authentication and admin role
@@ -24,7 +25,7 @@ export async function PUT(
     if (!id || !name) {
       return NextResponse.json(
         { error: "ID, name are required" },
-        { status: 400 }
+        { status: 400 },
       );
     }
     // Update supplier
@@ -40,20 +41,20 @@ export async function PUT(
 
     return NextResponse.json(
       { message: "Product updated successfully" },
-      { status: 200 }
+      { status: 200 },
     );
   } catch (error) {
     console.error("Error updating supplier:", error);
     return NextResponse.json(
       { error: "Internal server error" },
-      { status: 500 }
+      { status: 500 },
     );
   }
 }
 
 export async function DELETE(
-  request: Request,
-  { params }: { params: Promise<{ id: number }> }
+  _: Request,
+  { params }: { params: Promise<{ id: number }> },
 ) {
   try {
     // Check authentication and admin role
@@ -69,17 +70,38 @@ export async function DELETE(
     if (!id) {
       return NextResponse.json({ error: "ID is required" }, { status: 400 });
     }
+
+    const [productToDelete] = await db
+      .select()
+      .from(product)
+      .where(eq(product.id, id));
+
+    console.log(productToDelete);
+
+    if (productToDelete.image_key) {
+      const deletedImage = await deleteImageFromMinIO(
+        productToDelete.image_key,
+      );
+      console.log(deletedImage);
+      if (!deletedImage) {
+        return NextResponse.json(
+          { error: "Something went wrong" },
+          { status: 500 },
+        );
+      }
+    }
+
     // Delete supplier
     await db.delete(product).where(eq(product.id, id));
     return NextResponse.json(
       { message: "Product deleted successfully" },
-      { status: 200 }
+      { status: 200 },
     );
   } catch (error) {
     console.error("Error deleting product:", error);
     return NextResponse.json(
       { error: "Internal server error" },
-      { status: 500 }
+      { status: 500 },
     );
   }
 }
