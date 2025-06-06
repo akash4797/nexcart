@@ -1,5 +1,5 @@
 import React from "react";
-import { CircleX, Delete, PlusIcon, Trash } from "lucide-react";
+import { CircleX, PlusIcon } from "lucide-react";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Label } from "@/components/ui/label";

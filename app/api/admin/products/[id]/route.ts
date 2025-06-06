@@ -3,7 +3,7 @@ import { product } from "@/db/product.schema";
 import { NextResponse } from "next/server";
 import { eq } from "drizzle-orm";
 import { isAdmin } from "@/lib/auth/serverAuth";
-import { deleteImageFromMinIO } from "@/lib/minio/image";
+import { deleteImageFromMinIO, uploadImageToMinIO } from "@/lib/minio/image";
 
 export async function PUT(
   request: Request,
@@ -18,23 +18,81 @@ export async function PUT(
 
     //parse query
     const { id } = await params;
-    // Parse request body
-    const body = await request.json();
-    const { name, description, image, remark } = body;
+
+    // Get the content type to determine how to parse the request
+    const contentType = request.headers.get("content-type") || "";
+
+    let name: string, description: string, image: string | null, remark: string;
+    let imageData = { url: null as string | null, key: null as string | null };
+
+    // Handle FormData (file upload) or JSON
+    if (contentType.includes("multipart/form-data")) {
+      // Parse form data for file upload
+      const formData = await request.formData();
+      name = formData.get("name") as string;
+      description = formData.get("description") as string;
+      const imageFile = formData.get("image") as File;
+      remark = formData.get("remark") as string;
+
+      // Get the current product to check if we need to delete an existing image
+      const [currentProduct] = await db
+        .select()
+        .from(product)
+        .where(eq(product.id, id));
+
+      // Handle image upload if provided
+      if (imageFile && imageFile.size > 0) {
+        // Delete old image if exists
+        if (currentProduct.image_key) {
+          await deleteImageFromMinIO(currentProduct.image_key);
+        }
+
+        // Upload new image
+        const imageUploaded = await uploadImageToMinIO(imageFile);
+        if (!imageUploaded) {
+          return NextResponse.json(
+            { error: "Image upload failed" },
+            { status: 400 },
+          );
+        }
+
+        imageData = {
+          url: imageUploaded.url || null,
+          key: imageUploaded.key || null,
+        };
+      } else {
+        // Keep existing image
+        imageData = {
+          url: currentProduct.image,
+          key: currentProduct.image_key,
+        };
+      }
+    } else {
+      // Parse JSON body
+      const body = await request.json();
+      name = body.name;
+      description = body.description;
+      image = body.image;
+      remark = body.remark;
+      imageData.url = image;
+    }
+
     // Validate required fields
     if (!id || !name) {
       return NextResponse.json(
-        { error: "ID, name are required" },
+        { error: "ID and name are required" },
         { status: 400 },
       );
     }
-    // Update supplier
+
+    // Update product
     await db
       .update(product)
       .set({
         name,
         description: description || null,
-        image: image || null,
+        image: imageData.url,
+        image_key: imageData.key,
         remark: remark || null,
       })
       .where(eq(product.id, id));
@@ -44,7 +102,7 @@ export async function PUT(
       { status: 200 },
     );
   } catch (error) {
-    console.error("Error updating supplier:", error);
+    console.error("Error updating product:", error);
     return NextResponse.json(
       { error: "Internal server error" },
       { status: 500 },

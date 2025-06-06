@@ -110,7 +110,9 @@ const Products = () => {
               ? filterProducts.map((product) => (
                   <TableRow key={product.id} className="text-center">
                     <TableCell>{product.name}</TableCell>
-                    <TableCell>{product.description}</TableCell>
+                    <TableCell className="max-w-[200px] truncate">
+                      {product.description}
+                    </TableCell>
                     <TableCell>
                       {product.image && (
                         <div className="flex items-center justify-center">
@@ -119,7 +121,7 @@ const Products = () => {
                             width={40}
                             height={40}
                             alt={product.name}
-                            className="rounded-lg object-contain object-center"
+                            className="rounded-lg object-cover object-center h-10 w-10"
                           />
                         </div>
                       )}
