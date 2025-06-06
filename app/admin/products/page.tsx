@@ -17,6 +17,11 @@ import { Input } from "@/components/ui/input";
 import EditProduct from "./EditProduct";
 import DeleteProduct from "./DeleteProduct";
 import Image from "next/image";
+import {
+  HoverCard,
+  HoverCardContent,
+  HoverCardTrigger,
+} from "@/components/ui/hover-card";
 
 const fetcher = async () => {
   try {
@@ -111,7 +116,14 @@ const Products = () => {
                   <TableRow key={product.id} className="text-center">
                     <TableCell>{product.name}</TableCell>
                     <TableCell className="max-w-[200px] truncate">
-                      {product.description}
+                      <HoverCard>
+                        <HoverCardTrigger className="cursor-pointer">
+                          {product.description}
+                        </HoverCardTrigger>
+                        <HoverCardContent align="start">
+                          {product.description}
+                        </HoverCardContent>
+                      </HoverCard>
                     </TableCell>
                     <TableCell>
                       {product.image && (
