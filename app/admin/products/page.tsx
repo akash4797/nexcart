@@ -16,6 +16,7 @@ import useScroll from "@/hooks/scroll";
 import { Input } from "@/components/ui/input";
 import EditProduct from "./EditProduct";
 import DeleteProduct from "./DeleteProduct";
+import Image from "next/image";
 
 const fetcher = async () => {
   try {
@@ -53,7 +54,7 @@ const Products = () => {
                 .toLowerCase()
                 .includes(search.toLowerCase())) ||
             (product.remark &&
-              product.remark.toLowerCase().includes(search.toLowerCase()))
+              product.remark.toLowerCase().includes(search.toLowerCase())),
         );
         setFilteredProducts(filtered);
       } else {
@@ -100,7 +101,7 @@ const Products = () => {
                   >
                     {header}
                   </TableHead>
-                )
+                ),
               )}
             </TableRow>
           </TableHeader>
@@ -110,7 +111,19 @@ const Products = () => {
                   <TableRow key={product.id} className="text-center">
                     <TableCell>{product.name}</TableCell>
                     <TableCell>{product.description}</TableCell>
-                    <TableCell>{product.image}</TableCell>
+                    <TableCell>
+                      {product.image && (
+                        <div className="flex items-center justify-center">
+                          <Image
+                            src={product.image}
+                            width={40}
+                            height={40}
+                            alt={product.name}
+                            className="rounded-lg object-contain object-center"
+                          />
+                        </div>
+                      )}
+                    </TableCell>
                     <TableCell>{product.remark}</TableCell>
                     <TableCell className="flex items-center gap-2 justify-center py-3">
                       <EditProduct product={product} />

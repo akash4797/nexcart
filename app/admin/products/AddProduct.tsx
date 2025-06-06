@@ -17,22 +17,32 @@ const AddProduct = () => {
     initialValues: {
       name: "",
       description: "",
-      image: "",
+      image: null as File | null,
       remark: "",
     },
     validationSchema: yup.object({
       name: yup.string().required("Name is required"),
       description: yup.string(),
-      image: yup.string(),
+      image: yup.mixed().test({
+        message: `File too big, can't exceed 2MB`,
+        test: (file) => {
+          const isValid = (file as File)?.size < 2 * 1024 * 1024;
+          return isValid;
+        },
+      }),
       remark: yup.string(),
     }),
     onSubmit: async (values) => {
+      const formData = new FormData();
+      formData.append("name", values.name);
+      formData.append("description", values.description);
+      if (values.image) {
+        formData.append("image", values.image);
+      }
+      formData.append("remark", values.remark);
       const response = await fetch("/api/admin/products", {
         method: "POST",
-        body: JSON.stringify(values),
-        headers: {
-          "Content-Type": "application/json",
-        },
+        body: formData,
       });
       if (response.ok) {
         formik.resetForm();
@@ -73,11 +83,15 @@ const AddProduct = () => {
             <div className="grid w-full max-w-full items-center gap-2">
               <Label htmlFor="contact">Image</Label>
               <Input
-                type="text"
+                type="file"
                 id="image"
                 placeholder="Image uploader will be here"
-                value={formik.values.image}
-                onChange={formik.handleChange}
+                onChange={(e) =>
+                  formik.setFieldValue(
+                    "image",
+                    e.target.files ? e.target.files[0] : null
+                  )
+                }
               />
               {formik.touched.image && formik.errors.image && (
                 <div className="text-red-500 text-xs">
