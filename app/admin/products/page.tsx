@@ -1,6 +1,8 @@
 "use client";
 import PageTitle from "@/components/Layout/Admin/PageTitle";
-import React from "react";
+import ImagePreviewer from "@/components/Modals/ImagePreviewer";
+import ResponsiveHoverCard from "@/components/ui/custom/ResponsiveHoverCard";
+import { Input } from "@/components/ui/input";
 import {
   Table,
   TableBody,
@@ -9,19 +11,13 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
-import AddProduct from "./AddProduct";
-import useSWR from "swr";
-import { Mutations } from "@/lib/Constants";
 import useScroll from "@/hooks/scroll";
-import { Input } from "@/components/ui/input";
-import EditProduct from "./EditProduct";
+import { Mutations } from "@/lib/Constants";
+import React from "react";
+import useSWR from "swr";
+import AddProduct from "./AddProduct";
 import DeleteProduct from "./DeleteProduct";
-import {
-  HoverCard,
-  HoverCardContent,
-  HoverCardTrigger,
-} from "@/components/ui/hover-card";
-import ImagePreviewer from "@/components/Modals/ImagePreviewer";
+import EditProduct from "./EditProduct";
 
 const fetcher = async () => {
   try {
@@ -115,15 +111,12 @@ const Products = () => {
               ? filterProducts.map((product) => (
                   <TableRow key={product.id} className="text-center">
                     <TableCell>{product.name}</TableCell>
-                    <TableCell className="max-w-[200px] truncate">
-                      <HoverCard>
-                        <HoverCardTrigger className="cursor-pointer">
-                          {product.description}
-                        </HoverCardTrigger>
-                        <HoverCardContent align="start">
-                          {product.description}
-                        </HoverCardContent>
-                      </HoverCard>
+                    <TableCell className="max-w-[150px] truncate">
+                      <ResponsiveHoverCard
+                        triggerContent={product.description}
+                        contentText={product.description || "No description"}
+                        triggerClassName="cursor-pointer"
+                      />
                     </TableCell>
                     <TableCell>
                       {product.image && (
