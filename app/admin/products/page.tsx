@@ -152,8 +152,8 @@ const Products = () => {
           <div className="hidden sm:block"></div>
           <span className="text-xs">
             {search.trim() !== ""
-              ? `${filterProducts.length} suppliers found`
-              : `${filterProducts?.length} suppliers in total`}
+              ? `${filterProducts.length} products found`
+              : `${filterProducts?.length} products in total`}
           </span>
           <div className="">{/* here will be pagination */}</div>
         </div>
