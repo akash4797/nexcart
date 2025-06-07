@@ -16,12 +16,12 @@ import useScroll from "@/hooks/scroll";
 import { Input } from "@/components/ui/input";
 import EditProduct from "./EditProduct";
 import DeleteProduct from "./DeleteProduct";
-import Image from "next/image";
 import {
   HoverCard,
   HoverCardContent,
   HoverCardTrigger,
 } from "@/components/ui/hover-card";
+import ImagePreviewer from "@/components/Modals/ImagePreviewer";
 
 const fetcher = async () => {
   try {
@@ -128,13 +128,7 @@ const Products = () => {
                     <TableCell>
                       {product.image && (
                         <div className="flex items-center justify-center">
-                          <Image
-                            src={product.image}
-                            width={40}
-                            height={40}
-                            alt={product.name}
-                            className="rounded-lg object-cover object-center h-10 w-10"
-                          />
+                          <ImagePreviewer imageUrl={product.image} />
                         </div>
                       )}
                     </TableCell>
