@@ -68,7 +68,9 @@ const Supplier = () => {
     return <div className="flex justify-center items-center">Loading...</div>;
   }
   if (error) {
-    return <div>Error: {error.message}</div>;
+    return (
+      <div className="flex justify-center items-center">{error.message}</div>
+    );
   }
 
   return (
@@ -128,7 +130,9 @@ const Supplier = () => {
         <div className="flex justify-between items-center py-5 px-2">
           <div className="hidden sm:block"></div>
           <span className="text-xs">
-            {filteredSuppliers.length} suppliers found
+            {search.trim() !== ""
+              ? `${filteredSuppliers.length} suppliers found`
+              : `${filteredSuppliers?.length} suppliers in total`}
           </span>
           <div className="">{/* here will be pagination */}</div>
         </div>

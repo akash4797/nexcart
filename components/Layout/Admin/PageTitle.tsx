@@ -19,7 +19,7 @@ const PageTitle = ({
       }`}
     >
       <h1
-        className={`font-bold transition-all duration-500  ${
+        className={`font-bold transition-all duration-500 allenoire-font  ${
           isScrolled
             ? "text-xl text-start sm:text-center"
             : "text-2xl text-start sm:text-center"

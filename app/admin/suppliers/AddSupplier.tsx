@@ -1,15 +1,5 @@
 import React from "react";
 import { PlusIcon } from "lucide-react";
-import {
-  Dialog,
-  DialogContent,
-  DialogHeader,
-  DialogTitle,
-  DialogTrigger,
-  DialogFooter,
-  DialogClose,
-  DialogOverlay,
-} from "@/components/ui/dialog";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Button } from "@/components/ui/button";
@@ -18,6 +8,7 @@ import * as yup from "yup";
 import { toast } from "sonner";
 import { mutate } from "swr";
 import { Mutations } from "@/lib/Constants";
+import Modal from "@/components/Modals/Modal";
 
 const AddSupplier = () => {
   const [open, setOpen] = React.useState(false);
@@ -51,17 +42,19 @@ const AddSupplier = () => {
     },
   });
   return (
-    <Dialog open={open} onOpenChange={setOpen}>
-      <DialogOverlay className="backdrop-blur-sm" />
-      <DialogTrigger asChild>
-        <Button size={"sm"} className="text-xs sm:text-sm">
-          <PlusIcon />
-          Add Supplier
-        </Button>
-      </DialogTrigger>
-      <DialogContent>
-        <DialogHeader>
-          <DialogTitle>Add Supplier</DialogTitle>
+    <>
+      <Modal
+        open={open}
+        onOpenChange={setOpen}
+        title="Add Supplier"
+        trigger={
+          <Button size={"sm"} className="text-xs sm:text-sm">
+            <PlusIcon />
+            Add Supplier
+          </Button>
+        }
+      >
+        <Modal.Form>
           <form className="mt-5 grid grid-cols-2 gap-5">
             <div className="grid w-full max-w-full items-center gap-2">
               <Label htmlFor="name">Name</Label>
@@ -122,20 +115,17 @@ const AddSupplier = () => {
               )}
             </div>
           </form>
-        </DialogHeader>
-        <DialogFooter>
-          <DialogClose asChild>
-            <Button variant={"secondary"}>Close</Button>
-          </DialogClose>
+        </Modal.Form>
+        <Modal.Actions>
           <Button
             onClick={() => formik.submitForm()}
             disabled={formik.isSubmitting || formik.isValidating}
           >
             {formik.isSubmitting || formik.isValidating ? "Creating" : "Create"}
           </Button>
-        </DialogFooter>
-      </DialogContent>
-    </Dialog>
+        </Modal.Actions>
+      </Modal>
+    </>
   );
 };
 

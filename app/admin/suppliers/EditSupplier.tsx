@@ -1,14 +1,4 @@
 import React from "react";
-import {
-  Dialog,
-  DialogContent,
-  DialogHeader,
-  DialogTitle,
-  DialogTrigger,
-  DialogFooter,
-  DialogClose,
-  DialogOverlay,
-} from "@/components/ui/dialog";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Button } from "@/components/ui/button";
@@ -17,6 +7,7 @@ import * as yup from "yup";
 import { toast } from "sonner";
 import { mutate } from "swr";
 import { Mutations } from "@/lib/Constants";
+import Modal from "@/components/Modals/Modal";
 
 const EditSupplier = ({ supplier }: { supplier: Supplier }) => {
   const [open, setOpen] = React.useState(false);
@@ -55,14 +46,14 @@ const EditSupplier = ({ supplier }: { supplier: Supplier }) => {
     },
   });
   return (
-    <Dialog open={open} onOpenChange={setOpen}>
-      <DialogOverlay className="backdrop-blur-sm" />
-      <DialogTrigger asChild>
-        <Button size={"sm"}>Edit</Button>
-      </DialogTrigger>
-      <DialogContent>
-        <DialogHeader>
-          <DialogTitle>Update Supplier</DialogTitle>
+    <>
+      <Modal
+        title="Update Supplier"
+        open={open}
+        onOpenChange={setOpen}
+        trigger={<Button size={"sm"}>Edit</Button>}
+      >
+        <Modal.Form>
           <form className="mt-5 grid grid-cols-2 gap-5">
             <div className="grid w-full max-w-full items-center gap-2">
               <Label htmlFor="name">Name</Label>
@@ -123,11 +114,8 @@ const EditSupplier = ({ supplier }: { supplier: Supplier }) => {
               )}
             </div>
           </form>
-        </DialogHeader>
-        <DialogFooter>
-          <DialogClose asChild>
-            <Button variant={"secondary"}>Close</Button>
-          </DialogClose>
+        </Modal.Form>
+        <Modal.Actions>
           <Button
             onClick={() => formik.submitForm()}
             disabled={formik.isSubmitting || formik.isValidating}
@@ -136,9 +124,9 @@ const EditSupplier = ({ supplier }: { supplier: Supplier }) => {
               ? "Updating..."
               : "Update"}
           </Button>
-        </DialogFooter>
-      </DialogContent>
-    </Dialog>
+        </Modal.Actions>
+      </Modal>
+    </>
   );
 };
 

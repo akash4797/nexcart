@@ -1,0 +1,1 @@
+ALTER TABLE `purchase` MODIFY COLUMN `other_expense` decimal(10,2);

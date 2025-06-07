@@ -1,18 +1,15 @@
 import { db } from "@/db";
 import { supplier } from "@/db/supplier.schema";
-import { getServerSession } from "next-auth";
 import { NextResponse } from "next/server";
-import { authOptions } from "../../auth/auth.config";
+import { isAdmin } from "@/lib/auth/serverAuth";
+import { desc } from "drizzle-orm";
 
 export async function POST(request: Request) {
   try {
     // Check authentication and admin role
-    const session = await getServerSession(authOptions);
-    if (!session) {
+    const isAdminUser = await isAdmin();
+    if (!isAdminUser) {
       return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
-    }
-    if (session?.user?.role !== "admin") {
-      return NextResponse.json({ error: "Forbidden" }, { status: 403 });
     }
 
     // Parse request body
@@ -48,15 +45,16 @@ export async function POST(request: Request) {
 export async function GET() {
   try {
     // Check authentication and admin role
-    const session = await getServerSession(authOptions);
-    if (!session) {
+    const isAdminUser = await isAdmin();
+    if (!isAdminUser) {
       return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
     }
-    if (session?.user?.role !== "admin") {
-      return NextResponse.json({ error: "Forbidden" }, { status: 403 });
-    }
+
     // Retrieve all suppliers
-    const suppliers = await db.select().from(supplier);
+    const suppliers = await db
+      .select()
+      .from(supplier)
+      .orderBy(desc(supplier.id));
     return NextResponse.json(suppliers, { status: 200 });
   } catch (error) {
     console.error("Error retrieving suppliers:", error);
