@@ -24,13 +24,17 @@ const AddProduct = () => {
     validationSchema: yup.object({
       name: yup.string().required("Name is required"),
       description: yup.string(),
-      image: yup.mixed().test({
-        message: `File too big, can't exceed 2MB`,
-        test: (file) => {
-          const isValid = (file as File)?.size < 2 * 1024 * 1024;
-          return isValid;
-        },
-      }),
+      image: yup
+        .mixed()
+        .nullable()
+        .test({
+          message: `File too big, can't exceed 2MB`,
+          test: (file) => {
+            if (!file) return true;
+            const isValid = (file as File)?.size < 2 * 1024 * 1024;
+            return isValid;
+          },
+        }),
       remark: yup.string(),
     }),
     onSubmit: async (values) => {
