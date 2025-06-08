@@ -1,8 +1,8 @@
 import { db } from "@/db";
 import { supplier } from "@/db/supplier.schema";
-import { NextResponse } from "next/server";
 import { isAdmin } from "@/lib/auth/serverAuth";
 import { desc } from "drizzle-orm";
+import { NextResponse } from "next/server";
 
 export async function POST(request: Request) {
   try {
@@ -31,13 +31,13 @@ export async function POST(request: Request) {
 
     return NextResponse.json(
       { message: "Supplier created successfully" },
-      { status: 201 }
+      { status: 201 },
     );
   } catch (error) {
     console.error("Error creating supplier:", error);
     return NextResponse.json(
       { error: "Internal server error" },
-      { status: 500 }
+      { status: 500 },
     );
   }
 }
@@ -60,7 +60,7 @@ export async function GET() {
     console.error("Error retrieving suppliers:", error);
     return NextResponse.json(
       { error: "Internal server error" },
-      { status: 500 }
+      { status: 500 },
     );
   }
 }

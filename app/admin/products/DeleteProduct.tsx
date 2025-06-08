@@ -6,14 +6,14 @@ import {
   AlertDialogDescription,
   AlertDialogFooter,
   AlertDialogHeader,
+  AlertDialogOverlay,
   AlertDialogTitle,
   AlertDialogTrigger,
-  AlertDialogOverlay,
 } from "@/components/ui/alert-dialog";
 import { Button } from "@/components/ui/button";
+import { Mutations } from "@/lib/Constants";
 import { toast } from "sonner";
 import { mutate } from "swr";
-import { Mutations } from "@/lib/Constants";
 
 const DeleteProduct = ({ product }: { product: Product }) => {
   const handleDelete = async () => {

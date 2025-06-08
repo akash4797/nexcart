@@ -1,13 +1,13 @@
-import React from "react";
+import Modal from "@/components/Modals/Modal";
+import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { Button } from "@/components/ui/button";
+import { Mutations } from "@/lib/Constants";
 import { useFormik } from "formik";
-import * as yup from "yup";
+import React from "react";
 import { toast } from "sonner";
 import { mutate } from "swr";
-import { Mutations } from "@/lib/Constants";
-import Modal from "@/components/Modals/Modal";
+import * as yup from "yup";
 
 const EditSupplier = ({ supplier }: { supplier: Supplier }) => {
   const [open, setOpen] = React.useState(false);

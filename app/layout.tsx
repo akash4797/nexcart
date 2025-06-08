@@ -1,9 +1,9 @@
-import { NextAuthProvider } from "./providers";
-import "./globals.css";
 import Layout from "@/components/Layout";
 import { ThemeProvider } from "@/components/Theme/theme-provider";
 import { Toaster } from "@/components/ui/sonner";
 import type { Metadata } from "next";
+import "./globals.css";
+import { NextAuthProvider } from "./providers";
 
 export const metadata: Metadata = {
   title: "NexCart - Stock, Sell & Scale",

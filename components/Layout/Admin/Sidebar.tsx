@@ -1,5 +1,4 @@
 "use client";
-import React from "react";
 import {
   Sheet,
   SheetContent,
@@ -7,19 +6,20 @@ import {
   SheetTitle,
   SheetTrigger,
 } from "@/components/ui/sheet";
+import { cn } from "@/lib/utils";
 import {
-  MenuIcon,
+  ChevronDownIcon,
   HomeIcon,
+  MenuIcon,
   PackageIcon,
   RecycleIcon,
-  UsersIcon,
-  ShoppingCartIcon,
   SettingsIcon,
+  ShoppingCartIcon,
+  UsersIcon,
 } from "lucide-react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { cn } from "@/lib/utils";
-import { ChevronDownIcon } from "lucide-react"; // Import an arrow icon
+import React from "react";
 
 const Sidebar = () => {
   const pathname = usePathname();
@@ -97,7 +97,7 @@ const Sidebar = () => {
                         "flex items-center justify-between gap-3 rounded-lg px-3 py-2 transition-all w-full text-[14px]",
                         isActive
                           ? "bg-gray-100 text-gray-900 dark:bg-gray-800 dark:text-gray-50"
-                          : "text-gray-500 hover:bg-gray-100 dark:hover:bg-gray-800 dark:text-gray-400"
+                          : "text-gray-500 hover:bg-gray-100 dark:hover:bg-gray-800 dark:text-gray-400",
                       )}
                     >
                       <div className="flex items-center gap-3">
@@ -108,7 +108,7 @@ const Sidebar = () => {
                         <ChevronDownIcon
                           className={cn(
                             "transition-transform",
-                            isExpanded ? "rotate-180" : "rotate-0"
+                            isExpanded ? "rotate-180" : "rotate-0",
                           )}
                         />
                       )}
@@ -125,7 +125,7 @@ const Sidebar = () => {
                             "block py-2 text-[12px] rounded-lg transition-all w-full",
                             pathname === sub.href
                               ? "bg-gray-100 text-gray-900 dark:bg-gray-800 dark:text-gray-50"
-                              : "text-gray-500 hover:bg-gray-100 dark:hover:bg-gray-800 dark:text-gray-400"
+                              : "text-gray-500 hover:bg-gray-100 dark:hover:bg-gray-800 dark:text-gray-400",
                           )}
                         >
                           <div className="ml-12">{sub.name}</div>

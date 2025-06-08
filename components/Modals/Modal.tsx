@@ -1,17 +1,17 @@
 "use client";
 
-import React from "react";
+import { Button } from "@/components/ui/button";
 import {
   Dialog,
+  DialogClose,
   DialogContent,
+  DialogFooter,
   DialogHeader,
+  DialogOverlay,
   DialogTitle,
   DialogTrigger,
-  DialogFooter,
-  DialogClose,
-  DialogOverlay,
 } from "@/components/ui/dialog";
-import { Button } from "@/components/ui/button";
+import React from "react";
 
 interface ModalProps {
   children: React.ReactNode;
@@ -35,10 +35,10 @@ const Modal: ModalComponent = ({
 }) => {
   const childrenArray = React.Children.toArray(children);
   const formContent = childrenArray.find(
-    (child) => React.isValidElement(child) && child.type === Modal.Form
+    (child) => React.isValidElement(child) && child.type === Modal.Form,
   );
   const actionsContent = childrenArray.find(
-    (child) => React.isValidElement(child) && child.type === Modal.Actions
+    (child) => React.isValidElement(child) && child.type === Modal.Actions,
   );
 
   return (

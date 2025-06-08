@@ -1,11 +1,11 @@
 "use client";
 
+import { useFormik } from "formik";
+import { HomeIcon } from "lucide-react";
 import { signIn } from "next-auth/react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
-import { HomeIcon } from "lucide-react";
-import { useFormik } from "formik";
 import * as yup from "yup";
 
 export default function SignIn() {

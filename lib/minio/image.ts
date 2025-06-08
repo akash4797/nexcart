@@ -1,5 +1,5 @@
 // lib/minio/uploadImageToMinIO.ts
-import { PutObjectCommand, DeleteObjectCommand } from "@aws-sdk/client-s3";
+import { DeleteObjectCommand, PutObjectCommand } from "@aws-sdk/client-s3";
 import { s3Client } from "./s3Client";
 
 export const uploadImageToMinIO = async (file: File) => {

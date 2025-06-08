@@ -1,8 +1,7 @@
-import React from "react";
-import { useSession } from "next-auth/react";
-import { signOut } from "next-auth/react";
-import Link from "next/link";
 import { Button } from "@/components/ui/button";
+import { signOut, useSession } from "next-auth/react";
+import Link from "next/link";
+import React from "react";
 
 const User = () => {
   const { data: session } = useSession();

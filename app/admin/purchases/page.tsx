@@ -1,6 +1,6 @@
 "use client";
-import React from "react";
 import PageTitle from "@/components/Layout/Admin/PageTitle";
+import React from "react";
 import AddPurchase from "./AddPurchase";
 
 const Purchase = () => {

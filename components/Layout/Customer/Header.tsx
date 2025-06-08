@@ -1,6 +1,6 @@
 import React from "react";
-import User from "./User";
 import { ModeToggle } from "../../Theme/ToggleTheme";
+import User from "./User";
 
 const Header = () => {
   return (

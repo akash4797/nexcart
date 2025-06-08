@@ -1,7 +1,7 @@
 import React from "react";
 import { ModeToggle } from "../../Theme/ToggleTheme";
-import UserDropDown from "./UserDropDown";
 import Sidebar from "./Sidebar";
+import UserDropDown from "./UserDropDown";
 
 const AdminHeader = () => {
   return (

@@ -1,13 +1,12 @@
-import React from "react";
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-import { useSession } from "next-auth/react";
-import { signOut } from "next-auth/react";
+import { signOut, useSession } from "next-auth/react";
+import React from "react";
 
 const UserDropDown = () => {
   const { data: session } = useSession();

@@ -1,6 +1,6 @@
 "use client";
-import React from "react";
 import { useSession } from "next-auth/react";
+import React from "react";
 
 export default function Home() {
   const { data: session } = useSession();

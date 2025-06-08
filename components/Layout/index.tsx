@@ -1,8 +1,8 @@
 "use client";
-import React from "react";
-import CustomerHeader from "./Customer/Header";
-import AdminHeader from "./Admin/Header";
 import { usePathname } from "next/navigation";
+import React from "react";
+import AdminHeader from "./Admin/Header";
+import CustomerHeader from "./Customer/Header";
 
 const Layout = ({ children }: { children: React.ReactNode }) => {
   const pathname = usePathname();

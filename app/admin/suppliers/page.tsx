@@ -1,6 +1,6 @@
 "use client";
-import React from "react";
-import useSWR from "swr";
+import PageTitle from "@/components/Layout/Admin/PageTitle";
+import { Input } from "@/components/ui/input";
 import {
   Table,
   TableBody,
@@ -9,13 +9,13 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
-import AddSupplier from "./AddSupplier";
-import EditSupplier from "./EditSupplier";
-import DeleteSupplier from "./DeleteSupplier";
-import { Mutations } from "@/lib/Constants";
-import { Input } from "@/components/ui/input";
-import PageTitle from "@/components/Layout/Admin/PageTitle";
 import useScroll from "@/hooks/scroll";
+import { Mutations } from "@/lib/Constants";
+import React from "react";
+import useSWR from "swr";
+import AddSupplier from "./AddSupplier";
+import DeleteSupplier from "./DeleteSupplier";
+import EditSupplier from "./EditSupplier";
 
 const fetcher = async () => {
   try {
@@ -41,7 +41,7 @@ const Supplier = () => {
   const isScrolled = useScroll();
   const [search, setSearch] = React.useState("");
   const [filteredSuppliers, setFilteredSuppliers] = React.useState<Supplier[]>(
-    []
+    [],
   );
 
   React.useEffect(() => {
@@ -55,7 +55,7 @@ const Supplier = () => {
             (supplier.contact &&
               supplier.contact.toLowerCase().includes(search.toLowerCase())) ||
             (supplier.remark &&
-              supplier.remark.toLowerCase().includes(search.toLowerCase()))
+              supplier.remark.toLowerCase().includes(search.toLowerCase())),
         );
         setFilteredSuppliers(filtered);
       } else {
@@ -106,7 +106,7 @@ const Supplier = () => {
                   >
                     {header}
                   </TableHead>
-                )
+                ),
               )}
             </TableRow>
           </TableHeader>

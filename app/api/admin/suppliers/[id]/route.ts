@@ -1,12 +1,12 @@
 import { db } from "@/db";
 import { supplier } from "@/db/supplier.schema";
-import { NextResponse } from "next/server";
-import { eq } from "drizzle-orm";
 import { isAdmin } from "@/lib/auth/serverAuth";
+import { eq } from "drizzle-orm";
+import { NextResponse } from "next/server";
 
 export async function PUT(
   request: Request,
-  { params }: { params: Promise<{ id: number }> }
+  { params }: { params: Promise<{ id: number }> },
 ) {
   try {
     // Check authentication and admin role
@@ -24,7 +24,7 @@ export async function PUT(
     if (!id || !name) {
       return NextResponse.json(
         { error: "ID, name are required" },
-        { status: 400 }
+        { status: 400 },
       );
     }
     // Update supplier
@@ -40,20 +40,20 @@ export async function PUT(
 
     return NextResponse.json(
       { message: "Supplier updated successfully" },
-      { status: 200 }
+      { status: 200 },
     );
   } catch (error) {
     console.error("Error updating supplier:", error);
     return NextResponse.json(
       { error: "Internal server error" },
-      { status: 500 }
+      { status: 500 },
     );
   }
 }
 
 export async function DELETE(
   request: Request,
-  { params }: { params: Promise<{ id: number }> }
+  { params }: { params: Promise<{ id: number }> },
 ) {
   try {
     // Check authentication and admin role
@@ -73,13 +73,13 @@ export async function DELETE(
     await db.delete(supplier).where(eq(supplier.id, id));
     return NextResponse.json(
       { message: "Supplier deleted successfully" },
-      { status: 200 }
+      { status: 200 },
     );
   } catch (error) {
     console.error("Error deleting supplier:", error);
     return NextResponse.json(
       { error: "Internal server error" },
-      { status: 500 }
+      { status: 500 },
     );
   }
 }

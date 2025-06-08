@@ -1,16 +1,16 @@
-import React from "react";
-import { CircleX } from "lucide-react";
-import { Input } from "@/components/ui/input";
-import { Textarea } from "@/components/ui/textarea";
-import { Label } from "@/components/ui/label";
+import Modal from "@/components/Modals/Modal";
 import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+import { Textarea } from "@/components/ui/textarea";
+import { Mutations } from "@/lib/Constants";
 import { useFormik } from "formik";
-import * as yup from "yup";
+import { CircleX } from "lucide-react";
+import Image from "next/image";
+import React from "react";
 import { toast } from "sonner";
 import { mutate } from "swr";
-import { Mutations } from "@/lib/Constants";
-import Modal from "@/components/Modals/Modal";
-import Image from "next/image";
+import * as yup from "yup";
 
 const EditProduct = ({ product }: { product: Product }) => {
   const [open, setOpen] = React.useState(false);

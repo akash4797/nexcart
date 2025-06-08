@@ -1,9 +1,9 @@
 import { db } from "@/db";
 import { product } from "@/db/product.schema";
-import { NextResponse } from "next/server";
-import { eq } from "drizzle-orm";
 import { isAdmin } from "@/lib/auth/serverAuth";
 import { deleteImageFromMinIO, uploadImageToMinIO } from "@/lib/minio/image";
+import { eq } from "drizzle-orm";
+import { NextResponse } from "next/server";
 
 export async function PUT(
   request: Request,

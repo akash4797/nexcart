@@ -1,9 +1,9 @@
 import { db } from "@/db";
-import { purchase } from "@/db/purchase.schema";
 import { inventory } from "@/db/inventory.schema";
-import { NextResponse } from "next/server";
+import { purchase } from "@/db/purchase.schema";
 import { isAdmin } from "@/lib/auth/serverAuth";
 import { eq } from "drizzle-orm";
+import { NextResponse } from "next/server";
 
 export async function POST(request: Request) {
   try {
@@ -22,7 +22,7 @@ export async function POST(request: Request) {
     if (!productId || !supplierId || !quantity || !buyPrice) {
       return NextResponse.json(
         { error: "Please fill the required fields" },
-        { status: 400 }
+        { status: 400 },
       );
     }
 
@@ -73,13 +73,13 @@ export async function POST(request: Request) {
 
     return NextResponse.json(
       { message: "Product created successfully" },
-      { status: 201 }
+      { status: 201 },
     );
   } catch (error) {
     console.error("Error creating product:", error);
     return NextResponse.json(
       { error: "Internal server error" },
-      { status: 500 }
+      { status: 500 },
     );
   }
 }
